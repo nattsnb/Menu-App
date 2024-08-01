@@ -10,5 +10,10 @@
   },
   "devDependencies": {
     "vite": "^5.3.4"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "url": "^0.11.4",
+    "vite-plugin-inspect": "^0.8.5"
   }
 }
