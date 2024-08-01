@@ -1,1 +1,5 @@
-console.log("script is working");
+import "../style.css";
+
+function displayMenu(){
+
+}
