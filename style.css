@@ -9,3 +9,15 @@
   background-color: plum;
   height: 500px;
 }
+
+
+#menu-container {
+  background-color: hotpink;
+  height: 300px;
+}
+
+.menu-row {
+  background-color: mediumslateblue;
+  height: 40px;
+}
+
