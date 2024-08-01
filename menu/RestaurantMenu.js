@@ -2,7 +2,7 @@ import { EditableMenuEntry } from "./EditableMenuEntry.js";
 
 export class RestaurantMenu {
   constructor(container, productsServerAddress) {
-    this.productsServerAddress = productsServerAddress
+    this.productsServerAddress = productsServerAddress;
     this.dishAndPriceArray = null;
     this.container = container;
     this.fetchProductsData();
