@@ -1,14 +1,21 @@
 import { EditableMenuEntry } from "./EditableMenuEntry.js";
 
 export class RestaurantMenu {
-  constructor(container) {
-    this.dishAndPriceArray = [
-      { name: "Lasagne", priceInEUR: 15 },
-      { name: "Pizza", priceInEUR: 10 },
-    ];
+  constructor(container, productsServerAddress) {
+    this.productsServerAddress = productsServerAddress
+    this.dishAndPriceArray = null;
     this.container = container;
-    this.displayEditableMenu();
+    this.fetchProductsData();
   }
+  fetchProductsData = async () => {
+    const fetchedData = await fetch(this.productsServerAddress);
+    if (fetchedData.status === 200) {
+      this.dishAndPriceArray = await fetchedData.json();
+      this.displayEditableMenu();
+    } else {
+      this.container.innerText = "Server error.";
+    }
+  };
   displayEditableMenu() {
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
