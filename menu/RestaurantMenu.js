@@ -1,9 +1,10 @@
 export class RestaurantMenu {
   constructor(container) {
-    this.dishAndPrice = {
-      Lasagne: 15,
-      Pizza: 10,
-    };
+    this.dishAndPriceArray = [
+      { name: "Lasagne", priceInEUR: 15 },
+      { name: "Pizza", priceInEUR: 10 },
+    ];
+
     this.container = container;
     this.displayMenu();
   }
@@ -11,7 +12,7 @@ export class RestaurantMenu {
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
-    for (let i = 0; i < Object.keys(this.dishAndPrice).length; i++) {
+    for (let i = 0; i < this.dishAndPriceArray.length; i++) {
       const row = document.createElement("div");
       row.classList.add("menu-row");
       this.createDishNameP(row, i);
@@ -23,7 +24,7 @@ export class RestaurantMenu {
   createDishNameP(row, i) {
     const dishName = document.createElement("p");
     dishName.classList.add("dish-name");
-    dishName.innerText = Object.keys(this.dishAndPrice)[i];
+    dishName.innerText = this.dishAndPriceArray[i].name;
     row.append(dishName);
   }
 
@@ -32,7 +33,7 @@ export class RestaurantMenu {
     priceWithCurrency.classList.add("price-with-currency");
     const price = document.createElement("p");
     price.classList.add("price");
-    price.innerText = this.dishAndPrice[Object.keys(this.dishAndPrice)[i]];
+    price.innerText = this.dishAndPriceArray[i].priceInEUR;
     const currency = document.createElement("p");
     currency.classList.add("currency");
     currency.innerText = "€";
@@ -45,6 +46,7 @@ export class RestaurantMenu {
     buttonWrapper.classList.add("button-wrapper");
     const editButton = document.createElement("button");
     editButton.innerText = "Edit";
+    editButton.addEventListener("click", this.editButtonFunctionality);
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
     buttonWrapper.append(editButton);
