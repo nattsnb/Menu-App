@@ -14,20 +14,20 @@ export class RestaurantMenu {
     for (let i = 0; i < Object.keys(this.dishAndPrice).length; i++) {
       const row = document.createElement("div");
       row.classList.add("menu-row");
-      this.createDishNameP(row);
-      this.createPriceWithCurrencyDiv(row);
+      this.createDishNameP(row, i);
+      this.createPriceWithCurrencyDiv(row, i);
       this.createButtonsInWrapper(row);
       menuContainer.append(row);
     }
   }
-  createDishNameP(row) {
+  createDishNameP(row, i) {
     const dishName = document.createElement("p");
     dishName.classList.add("dish-name");
     dishName.innerText = Object.keys(this.dishAndPrice)[i];
     row.append(dishName);
   }
 
-  createPriceWithCurrencyDiv(row) {
+  createPriceWithCurrencyDiv(row, i) {
     const priceWithCurrency = document.createElement("div");
     priceWithCurrency.classList.add("price-with-currency");
     const price = document.createElement("p");
