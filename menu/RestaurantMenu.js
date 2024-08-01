@@ -1,4 +1,4 @@
-import { MenuEntry } from "./MenuEntry.js";
+import { EditableMenuEntry } from "./EditableMenuEntry.js";
 
 export class RestaurantMenu {
   constructor(container) {
@@ -7,14 +7,14 @@ export class RestaurantMenu {
       { name: "Pizza", priceInEUR: 10 },
     ];
     this.container = container;
-    this.displayMenu();
+    this.displayEditableMenu();
   }
-  displayMenu() {
+  displayEditableMenu() {
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
-      new MenuEntry(this.dishAndPriceArray, menuContainer, i);
+      new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i);
     }
   }
 }
