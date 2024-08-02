@@ -4,10 +4,12 @@ export class EditableMenuEntry {
     this.menuContainer = menuContainer;
     this.i = i;
     this.row = null;
-    this.createMenuEntry();
     this.editForm = null;
     this.dishNameInput = null;
     this.priceInput = null;
+    this.price = null;
+    this.dishName = null;
+    this.createMenuEntry();
   }
   createMenuEntry() {
     this.row = document.createElement("div");
@@ -19,22 +21,22 @@ export class EditableMenuEntry {
   }
 
   createDishNameP() {
-    const dishName = document.createElement("p");
-    dishName.classList.add("dish-name");
-    dishName.innerText = this.dishAndPriceArray[this.i].name;
-    this.row.append(dishName);
+    this.dishName = document.createElement("p");
+    this.dishName.classList.add("dish-name");
+    this.dishName.innerText = this.dishAndPriceArray[this.i].name;
+    this.row.append(this.dishName);
   }
 
   createPriceWithCurrencyDiv() {
     const priceWithCurrency = document.createElement("div");
     priceWithCurrency.classList.add("price-with-currency");
-    const price = document.createElement("p");
-    price.classList.add("price");
-    price.innerText = this.dishAndPriceArray[this.i].priceInEUR;
+    this.price = document.createElement("p");
+    this.price.classList.add("price");
+    this.price.innerText = this.dishAndPriceArray[this.i].priceInEUR;
     const currency = document.createElement("p");
     currency.classList.add("currency");
     currency.innerText = "€";
-    priceWithCurrency.append(price);
+    priceWithCurrency.append(this.price);
     priceWithCurrency.append(currency);
     this.row.append(priceWithCurrency);
   }
@@ -120,6 +122,8 @@ export class EditableMenuEntry {
     } else if (editResponse.status === 404) {
       this.errorMessageP.innerText = "Server error.";
     } else if (editResponse.status === 200) {
+      this.dishName.innerText = dataToPost.name;
+      this.price.innerText = dataToPost.priceInEUR;
       this.editForm.replaceWith(this.row);
     }
   };
