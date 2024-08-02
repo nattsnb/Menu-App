@@ -1,7 +1,41 @@
+.edu-au-vic-wa-nt-hand-menu-font {
+                          font-family: "Edu AU VIC WA NT Hand", cursive;
+                          font-optical-sizing: auto;
+                          font-weight: 700;
+                          font-style: normal;
+                        }
+
+.ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+button {
+  font-family: "Ubuntu", sans-serif;
+}
+
+input {
+  font-family: "Ubuntu", sans-serif;
+}
+
 #logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h1 {
+  text-align: center
+}
+
+h2 {
+  text-align: center;
+  margin-top: 40px;
 }
 
 #app {
@@ -14,19 +48,40 @@
   height: 35px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  align-items: center;
   margin-bottom: 10px;
+  border-style: solid;
+  border-width: 4px;
+  border-style: double;
+  border-radius: 14px;
+  font-family: "Edu AU VIC WA NT Hand", cursive ;
+  font-weight: bold;
 }
 
+.dish-name {
+  margin-left: 60px;
+  margin-right: 40px;
+  width: 80px;
+}
+
+.price {
+  margin-right: 5px;
+}
+
+
 .price-with-currency {
+  width: 100px;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 60px;
 }
 
 .button-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
+  width: 100px;
 }
 
 .edit-form {
