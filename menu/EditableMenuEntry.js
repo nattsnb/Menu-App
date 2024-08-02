@@ -48,6 +48,7 @@ export class EditableMenuEntry {
     editButton.addEventListener("click", this.editButtonFunctionality);
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
+    deleteButton.addEventListener("click", this.deleteButtonFunctionality)
     buttonWrapper.append(editButton);
     buttonWrapper.append(deleteButton);
     this.row.append(buttonWrapper);
@@ -125,6 +126,19 @@ export class EditableMenuEntry {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
       this.editForm.replaceWith(this.row);
+    }
+  };
+  deleteButtonFunctionality=async()=>{
+    const deleteResponse = await fetch(
+        `http://localhost:3000/products/${this.dishAndPriceArray[this.i].id}`,
+        {
+          method: "DELETE",
+        },
+    );
+    if (deleteResponse.status === 200) {
+      this.row.remove();
+    } else {
+      this.errorMessageP.innerText = "Server error.";
     }
   };
 }
