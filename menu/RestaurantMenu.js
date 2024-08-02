@@ -1,5 +1,5 @@
 import { EditableMenuEntry } from "./EditableMenuEntry.js";
-import {NewEntryForm} from "./NewEntryForm.js";
+import { NewEntryForm } from "./NewEntryForm.js";
 
 export class RestaurantMenu {
   constructor(container, productsServerAddress) {
