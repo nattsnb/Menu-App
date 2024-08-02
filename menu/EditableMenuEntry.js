@@ -139,7 +139,9 @@ export class EditableMenuEntry {
     );
     if (deleteResponse.status === 200) {
       this.row.remove();
-      this.entryWrapper.remove();
+      if(this.entryWrapper){
+          this.entryWrapper.remove();
+      }
     } else {
       this.errorMessageP.innerText = "Server error.";
     }
