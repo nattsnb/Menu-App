@@ -5,9 +5,9 @@ export class EditableMenuEntry {
     this.i = i;
     this.row = null;
     this.editForm = null;
-    this.entryWrapper = null;
-    this.dishNameInput = null;
-    this.priceInput = null;
+    this.editEntryWrapper = null;
+    this.dishNameEditInput = null;
+    this.priceInEUREditInput = null;
     this.price = null;
     this.dishName = null;
     this.createMenuEntry();
@@ -57,30 +57,30 @@ export class EditableMenuEntry {
   editButtonFunctionality = () => {
     this.editForm = document.createElement("form");
     this.editForm.classList.add("edit-form");
-    this.entryWrapper = document.createElement("div");
-    this.entryWrapper.classList.add("entry-wrapper");
-    this.entryWrapper.append(this.editForm);
+    this.editEntryWrapper = document.createElement("div");
+    this.editEntryWrapper.classList.add("edit-entry-wrapper");
+    this.editEntryWrapper.append(this.editForm);
     this.errorMessageP = document.createElement("p");
     this.errorMessageP.classList.add("error-message-p");
     this.editForm.append(this.errorMessageP);
-    this.createEditFormInputs(this.entryWrapper);
-    this.createEditFormCurrencyP(this.entryWrapper);
-    this.createSaveButtonEditForm(this.entryWrapper);
+    this.createEditFormInputs(this.editEntryWrapper);
+    this.createEditFormCurrencyP(this.editEntryWrapper);
+    this.createSaveButtonEditForm(this.editEntryWrapper);
     this.createDeleteButtonEditForm();
-    this.row.replaceWith(this.entryWrapper);
+    this.row.replaceWith(this.editEntryWrapper);
     this.initializeSavingEditedMenuEntry();
   };
   createEditFormInputs() {
-    this.dishNameInput = document.createElement("input");
-    this.dishNameInput.value = this.dishAndPriceArray[this.i].name;
-    this.dishNameInput.placeholder = "Dish name";
-    this.dishNameInput.classList.add("dish-input-form");
-    this.priceInput = document.createElement("input");
-    this.priceInput.value = this.dishAndPriceArray[this.i].priceInEUR;
-    this.priceInput.classList.add("price-input-form");
-    this.priceInput.placeholder = "0.0";
-    this.editForm.append(this.dishNameInput);
-    this.editForm.append(this.priceInput);
+    this.dishNameEditInput = document.createElement("input");
+    this.dishNameEditInput.value = this.dishAndPriceArray[this.i].name;
+    this.dishNameEditInput.placeholder = "Dish name";
+    this.dishNameEditInput.classList.add("dish-name-edit-input");
+    this.priceInEUREditInput = document.createElement("input");
+    this.priceInEUREditInput.value = this.dishAndPriceArray[this.i].priceInEUR;
+    this.priceInEUREditInput.classList.add("price-in-EUR-edit-input");
+    this.priceInEUREditInput.placeholder = "0.0";
+    this.editForm.append(this.dishNameEditInput);
+    this.editForm.append(this.priceInEUREditInput);
   }
   createEditFormCurrencyP() {
     const currencyP = document.createElement("p");
@@ -91,12 +91,13 @@ export class EditableMenuEntry {
   createSaveButtonEditForm() {
     const saveButton = document.createElement("button");
     saveButton.innerText = "Save";
+    saveButton.classList.add("save-button");
     this.editForm.append(saveButton);
   }
   createDeleteButtonEditForm() {
     const deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
-    this.entryWrapper.append(deleteButton);
+    this.editEntryWrapper.append(deleteButton);
     deleteButton.addEventListener("click", this.deleteButtonFunctionality);
   }
   initializeSavingEditedMenuEntry() {
@@ -107,8 +108,8 @@ export class EditableMenuEntry {
   }
   postEditedMenuEntry = async () => {
     const dataToPost = {
-      name: this.dishNameInput.value,
-      priceInEUR: Number(this.priceInput.value),
+      name: this.dishNameEditInput.value,
+      priceInEUR: Number(this.priceInEUREditInput.value),
     };
     const editResponse = await fetch(
       `http://localhost:3000/products/${this.dishAndPriceArray[this.i].id}`,
@@ -127,7 +128,7 @@ export class EditableMenuEntry {
     } else if (editResponse.status === 200) {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
-      this.entryWrapper.replaceWith(this.row);
+      this.editEntryWrapper.replaceWith(this.row);
     }
   };
   deleteButtonFunctionality = async () => {
@@ -139,8 +140,8 @@ export class EditableMenuEntry {
     );
     if (deleteResponse.status === 200) {
       this.row.remove();
-      if (this.entryWrapper) {
-        this.entryWrapper.remove();
+      if (this.editEntryWrapper) {
+        this.editEntryWrapper.remove();
       }
     } else {
       this.errorMessageP.innerText = "Server error.";
