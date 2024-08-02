@@ -7,8 +7,8 @@ export class NewEntryForm {
     this.initializeNewArticleForm();
   }
   createNewEntryForm() {
-    const headline = document.createElement("h3");
-    headline.innerText = "New menu entry:";
+    const headline = document.createElement("h2");
+    headline.innerText = "New Menu entry:";
     this.newEntryForm = document.createElement("form");
     this.newEntryForm.setAttribute("id", "new-menu-entry-form");
     this.createNewEntryInputs();

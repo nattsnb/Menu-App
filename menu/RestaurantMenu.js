@@ -18,6 +18,9 @@ export class RestaurantMenu {
     }
   };
   displayEditableMenu() {
+    const title = document.createElement("h1")
+    title.innerText = "Edit Menu"
+    this.container.append(title)
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
