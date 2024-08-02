@@ -10,16 +10,20 @@ export class NewEntryForm {
     const headline = document.createElement("h2");
     headline.innerText = "New Menu entry:";
     this.newEntryForm = document.createElement("form");
-    this.newEntryForm.setAttribute("id", "new-menu-entry-form");
+    this.newEntryForm.setAttribute("id", "new-entry-form");
     this.createNewEntryInputs();
+    const currency = document.createElement("p");
+    currency.innerText = "€";
     const sendButton = document.createElement("button");
     sendButton.innerText = "Send";
+    sendButton.classList.add("new-entry-send-button");
     this.errorMessage = document.createElement("p");
-    this.newEntryForm.append(headline);
     this.newEntryForm.append(this.dishNameInput);
     this.newEntryForm.append(this.priceInEURInput);
+    this.newEntryForm.append(currency);
     this.newEntryForm.append(sendButton);
     this.newEntryForm.append(this.errorMessage);
+    this.container.append(headline);
     this.container.append(this.newEntryForm);
   }
   createNewEntryInputs() {
