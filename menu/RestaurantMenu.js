@@ -1,4 +1,5 @@
 import { EditableMenuEntry } from "./EditableMenuEntry.js";
+import {NewEntryForm} from "./NewEntryForm.js";
 
 export class RestaurantMenu {
   constructor(container, productsServerAddress) {
@@ -23,5 +24,6 @@ export class RestaurantMenu {
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
       new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i);
     }
+    const newEntryForm = new NewEntryForm(this.container);
   }
 }
