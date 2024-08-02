@@ -127,7 +127,7 @@ export class EditableMenuEntry {
     } else if (editResponse.status === 200) {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
-      this.editForm.replaceWith(this.row);
+      this.entryWrapper.replaceWith(this.row);
     }
   };
   deleteButtonFunctionality = async () => {
