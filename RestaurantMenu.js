@@ -1,14 +1,13 @@
-import { EditableMenuEntry } from "./EditableMenuEntry.js";
-import { NewEntryForm } from "./NewEntryForm.js";
+import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
+import { NewEntryForm } from "/menu/NewEntryForm.js";
 
 export class RestaurantMenu {
   constructor(container, productsServerAddress) {
     this.productsServerAddress = productsServerAddress;
     this.dishAndPriceArray = null;
     this.container = container;
-    this.fetchProductsData();
   }
-  fetchProductsData = async () => {
+  fetchProductsDataAndDisplayEditableMenu = async () => {
     const fetchedData = await fetch(this.productsServerAddress);
     if (fetchedData.status === 200) {
       this.dishAndPriceArray = await fetchedData.json();
