@@ -161,3 +161,20 @@ h2 {
   margin-left: 37px;
   margin-right: 4px;
 }
+
+.number-of-plates-div {
+  width: 100px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 19px;
+  margin-right: 40px;
+}
+
+.fas {
+  font-size: 22px;
+  margin-right: 8px;
+  margin-left: 8px;
+  color: darkorange;
+}

@@ -7,12 +7,14 @@ export class OrderMenuEntry {
     this.price = null;
     this.dishName = null;
     this.createMenuEntry();
+    this.number = null;
   }
   createMenuEntry() {
     this.row = document.createElement("div");
     this.row.classList.add("menu-row");
     this.createDishNameParagraph();
     this.createPriceWithCurrencyDiv();
+    this.createNumberOfPlatesDiv();
     this.menuContainer.append(this.row);
   }
 
@@ -35,5 +37,25 @@ export class OrderMenuEntry {
     priceWithCurrency.append(this.price);
     priceWithCurrency.append(currency);
     this.row.append(priceWithCurrency);
+  }
+
+  createNumberOfPlatesDiv() {
+    const numberOfPlatesDiv = document.createElement("div");
+    numberOfPlatesDiv.classList.add("number-of-plates-div");
+    this.row.append(numberOfPlatesDiv);
+    this.addIcon("fa-plus-circle", numberOfPlatesDiv);
+    const numberDiv = document.createElement("div");
+    numberDiv.classList.add("number-div");
+    this.number = 0;
+    numberDiv.innerHTML = this.number;
+    numberOfPlatesDiv.append(numberDiv);
+    this.addIcon("fa-minus-circle", numberOfPlatesDiv);
+  }
+
+  addIcon(iconName, container) {
+    const icon = document.createElement("span");
+    icon.classList.add("fas");
+    icon.classList.add(iconName);
+    container.append(icon);
   }
 }
