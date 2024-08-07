@@ -15,13 +15,13 @@ export class EditableMenuEntry {
   createMenuEntry() {
     this.row = document.createElement("div");
     this.row.classList.add("menu-row");
-    this.createDishNameP();
+    this.createDishNameParagraph();
     this.createPriceWithCurrencyDiv();
     this.createButtonsInWrapper();
     this.menuContainer.append(this.row);
   }
 
-  createDishNameP() {
+  createDishNameParagraph() {
     this.dishName = document.createElement("p");
     this.dishName.classList.add("dish-name");
     this.dishName.innerText = this.dishAndPriceArray[this.i].name;
@@ -64,7 +64,7 @@ export class EditableMenuEntry {
     this.errorMessageP.classList.add("error-message-p");
     this.editForm.append(this.errorMessageP);
     this.createEditFormInputs(this.editEntryWrapper);
-    this.createEditFormCurrencyP(this.editEntryWrapper);
+    this.createEditFormCurrencyParagraph(this.editEntryWrapper);
     this.createSaveButtonEditForm(this.editEntryWrapper);
     this.createDeleteButtonEditForm();
     this.row.replaceWith(this.editEntryWrapper);
@@ -82,7 +82,7 @@ export class EditableMenuEntry {
     this.editForm.append(this.dishNameEditInput);
     this.editForm.append(this.priceInEUREditInput);
   }
-  createEditFormCurrencyP() {
+  createEditFormCurrencyParagraph() {
     const currencyP = document.createElement("p");
     currencyP.innerText = "€";
     currencyP.classList.add("currency-p-form");
