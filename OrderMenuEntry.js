@@ -6,8 +6,8 @@ export class OrderMenuEntry {
     this.row = null;
     this.price = null;
     this.dishName = null;
+    this.numberOfPlates = 0;
     this.createMenuEntry();
-    this.number = null;
   }
   createMenuEntry() {
     this.row = document.createElement("div");
@@ -39,23 +39,38 @@ export class OrderMenuEntry {
     this.row.append(priceWithCurrency);
   }
 
-  createNumberOfPlatesDiv() {
+  createNumberOfPlatesDiv = () => {
     const numberOfPlatesDiv = document.createElement("div");
     numberOfPlatesDiv.classList.add("number-of-plates-div");
     this.row.append(numberOfPlatesDiv);
-    this.addIcon("fa-plus-circle", numberOfPlatesDiv);
-    const numberDiv = document.createElement("div");
-    numberDiv.classList.add("number-div");
-    this.number = 0;
-    numberDiv.innerHTML = this.number;
-    numberOfPlatesDiv.append(numberDiv);
-    this.addIcon("fa-minus-circle", numberOfPlatesDiv);
-  }
+    const plusIcon = this.returnIcon("fa-plus-circle", numberOfPlatesDiv);
+    plusIcon.addEventListener("click", this.plusIconFunctionality);
+    numberOfPlatesDiv.append(plusIcon);
+    this.numberDiv = document.createElement("div");
+    this.numberDiv.classList.add("number-div");
+    this.numberDiv.innerHTML = this.numberOfPlates;
+    numberOfPlatesDiv.append(this.numberDiv);
+    const minusIcon = this.returnIcon("fa-minus-circle", numberOfPlatesDiv);
+    minusIcon.addEventListener("click", this.minusIconFunctionality);
+    numberOfPlatesDiv.append(minusIcon);
+  };
 
-  addIcon(iconName, container) {
+  returnIcon(iconName, container) {
     const icon = document.createElement("span");
     icon.classList.add("fas");
     icon.classList.add(iconName);
-    container.append(icon);
+    return icon;
   }
+
+  plusIconFunctionality = () => {
+    this.numberOfPlates = this.numberOfPlates + 1;
+    this.numberDiv.innerHTML = this.numberOfPlates;
+  };
+
+  minusIconFunctionality = () => {
+    if (this.numberOfPlates > 0) {
+      this.numberOfPlates = this.numberOfPlates - 1;
+      this.numberDiv.innerHTML = this.numberOfPlates;
+    }
+  };
 }
