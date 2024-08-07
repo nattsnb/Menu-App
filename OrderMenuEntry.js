@@ -11,12 +11,12 @@ export class OrderMenuEntry {
   createMenuEntry() {
     this.row = document.createElement("div");
     this.row.classList.add("menu-row");
-    this.createDishNameP();
+    this.createDishNameParagraph();
     this.createPriceWithCurrencyDiv();
     this.menuContainer.append(this.row);
   }
 
-  createDishNameP() {
+  createDishNameParagraph() {
     this.dishName = document.createElement("p");
     this.dishName.classList.add("dish-name");
     this.dishName.innerText = this.dishAndPriceArray[this.i].name;
