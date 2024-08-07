@@ -1,1 +1,7 @@
-console.log("script is working");
+import "./style.css";
+import { RestaurantMenu } from "./RestaurantMenu.js";
+
+const productsServerAddress = "http://localhost:3000/products";
+const bodyContainer = document.getElementById("body-container");
+const restaurantMenu = new RestaurantMenu(bodyContainer, productsServerAddress);
+bodyContainer.innerText = "Placeholder";
