@@ -1,5 +1,5 @@
 export class OrderMenuEntry {
-  constructor(dishAndPriceArray, menuContainer, i) {
+  constructor(dishAndPriceArray, menuContainer, i, orderData) {
     this.dishAndPriceArray = dishAndPriceArray;
     this.menuContainer = menuContainer;
     this.i = i;
@@ -7,6 +7,7 @@ export class OrderMenuEntry {
     this.price = null;
     this.dishName = null;
     this.numberOfPlates = 0;
+    this.orderData = orderData;
     this.createMenuEntry();
   }
   createMenuEntry() {
@@ -65,12 +66,37 @@ export class OrderMenuEntry {
   plusIconFunctionality = () => {
     this.numberOfPlates = this.numberOfPlates + 1;
     this.numberDiv.innerHTML = this.numberOfPlates;
+    let productOrder = {
+      "quantity": this.numberOfPlates,
+      "id": this.dishAndPriceArray[this.i].id
+    }
+    console.log(productOrder)
+    if(this.numberOfPlates > 0){
+      this.orderData.products.push(productOrder)
+      console.log(this.orderData)
+    }
   };
 
   minusIconFunctionality = () => {
+    const beforeOrder = {
+      "quantity": this.numberOfPlates,
+      "id": this.dishAndPriceArray[this.i].id
+    }
+    console.log(beforeOrder)
     if (this.numberOfPlates > 0) {
       this.numberOfPlates = this.numberOfPlates - 1;
       this.numberDiv.innerHTML = this.numberOfPlates;
     }
+    let productOrder = {
+      "quantity": this.numberOfPlates,
+      "id": this.dishAndPriceArray[this.i].id
+    }
+    console.log(productOrder)
+    console.log(this.orderData.products)
+    if(this.orderData.products.includes(beforeOrder)){
+      console.log("is there")
+    }
+    this.orderData.products.push(productOrder)
+    console.log(this.orderData)
   };
 }
