@@ -178,3 +178,22 @@ h2 {
   margin-left: 8px;
   color: darkorange;
 }
+
+#provide-address-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-weight: bold;
+  justify-content: center;
+}
+
+input {
+  margin: 5px;
+}
+
+.new-order-send-button {
+  margin-top: 15px;
+  font-size: 30px;
+  background-color: darkorange;
+}

@@ -70,7 +70,6 @@ export class OrderMenuEntry {
       quantity: this.numberOfPlates,
       id: this.dishAndPriceArray[this.i].id,
     };
-    console.log(productOrder);
     if (this.numberOfPlates === 1) {
       this.orderData.products.push(productOrder);
     } else {
@@ -81,7 +80,6 @@ export class OrderMenuEntry {
       this.orderData.products.splice(index, 1);
       this.orderData.products.push(productOrder);
     }
-    console.log(this.orderData.products);
   };
 
   minusIconFunctionality = () => {
@@ -92,7 +90,6 @@ export class OrderMenuEntry {
         quantity: this.numberOfPlates,
         id: this.dishAndPriceArray[this.i].id,
       };
-      console.log(productOrder);
       if (this.numberOfPlates === 0) {
         let obj = this.orderData.products.find(
           (x) => x.id === this.dishAndPriceArray[this.i].id,
@@ -107,7 +104,6 @@ export class OrderMenuEntry {
         this.orderData.products.splice(index, 1);
         this.orderData.products.push(productOrder);
       }
-      console.log(this.orderData.products);
     }
   };
 }

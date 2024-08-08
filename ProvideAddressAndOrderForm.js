@@ -15,11 +15,11 @@ export class ProvideAddressAndOrderForm {
     this.container.append(headline);
     this.container.append(this.provideAddressAndOrderForm);
     this.errorMessage = document.createElement("div")
-    this.container.append(this.errorMessage)
+    this.provideAddressAndOrderForm.append(this.errorMessage)
     const sendButton = document.createElement("button");
-    sendButton.innerText = "Place theOrder";
+    sendButton.innerText = "Place the Order";
     sendButton.classList.add("new-order-send-button");
-    this.container.append(sendButton)
+    this.provideAddressAndOrderForm.append(sendButton)
   }
 
   createAddressInputs() {
@@ -53,7 +53,6 @@ export class ProvideAddressAndOrderForm {
       },
     });
     const newOrderData = await postResponse.json();
-    console.log(newOrderData)
     if (postResponse.status === 400) {
       this.errorMessage.innerText = "Error, provide data.";
     } else if (postResponse.status === 404) {
