@@ -1,6 +1,7 @@
 export class ProvideAddressAndOrderForm {
-  constructor(container) {
+  constructor(container, orderData) {
     this.container = container;
+    this.orderData = orderData;
     this.createProvideAddressAndOrderForm();
     this.initializeProvideAddressAndOrderForm();
   }
@@ -13,6 +14,12 @@ export class ProvideAddressAndOrderForm {
     this.createAddressInputs();
     this.container.append(headline);
     this.container.append(this.provideAddressAndOrderForm);
+    this.errorMessage = document.createElement("div")
+    this.container.append(this.errorMessage)
+    const sendButton = document.createElement("button");
+    sendButton.innerText = "Place theOrder";
+    sendButton.classList.add("new-order-send-button");
+    this.container.append(sendButton)
   }
 
   createAddressInputs() {
@@ -29,33 +36,31 @@ export class ProvideAddressAndOrderForm {
     townPostCodeInput.classList.add("post-code-input");
     this.provideAddressAndOrderForm.append(townPostCodeInput);
   }
+
   initializeProvideAddressAndOrderForm() {
     this.provideAddressAndOrderForm.addEventListener("submit", (event) => {
       event.preventDefault();
       this.sendTheOrder();
     });
   }
+
   sendTheOrder = async () => {
-    this.addToOrder(dataToSend);
-    console.log(dataToSend);
-    const postResponse = await fetch("http://localhost:3000/products/", {
+    const postResponse = await fetch("http://localhost:3000/orders/", {
       method: "POST",
-      body: JSON.stringify(dataToSend),
+      body: JSON.stringify(this.orderData),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const newEntryData = await postResponse.json();
+    const newOrderData = await postResponse.json();
+    console.log(newOrderData)
     if (postResponse.status === 400) {
       this.errorMessage.innerText = "Error, provide data.";
-    } else if (postResponse.status === 409) {
-      this.errorMessage.innerText =
-        "Error, article with this title already exists.";
     } else if (postResponse.status === 404) {
       this.errorMessage.innerText = "Error, server doesn't exist.";
     } else if (postResponse.status === 201) {
-      location.reload();
+      console.log("Data Sent")
     }
   };
-  addToOrder(data) {}
 }
+

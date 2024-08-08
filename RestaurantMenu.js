@@ -53,7 +53,7 @@ export class RestaurantMenu {
       new OrderMenuEntry(this.dishAndPriceArray, menuContainer, i, orderData);
     }
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
-      this.container,
+      this.container, this.dataToPlaceOrder
     );
   }
 }
