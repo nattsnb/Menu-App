@@ -2,7 +2,7 @@ export class ProvideAddressAndOrderForm {
   constructor(container) {
     this.container = container;
     this.createProvideAddressAndOrderForm();
-    this.initializeProvideAddressAndOrderForm();;
+    this.initializeProvideAddressAndOrderForm();
   }
 
   createProvideAddressAndOrderForm() {
@@ -36,8 +36,8 @@ export class ProvideAddressAndOrderForm {
     });
   }
   sendTheOrder = async () => {
-    this.addToOrder(dataToSend)
-    console.log(dataToSend)
+    this.addToOrder(dataToSend);
+    console.log(dataToSend);
     const postResponse = await fetch("http://localhost:3000/products/", {
       method: "POST",
       body: JSON.stringify(dataToSend),
@@ -50,14 +50,12 @@ export class ProvideAddressAndOrderForm {
       this.errorMessage.innerText = "Error, provide data.";
     } else if (postResponse.status === 409) {
       this.errorMessage.innerText =
-          "Error, article with this title already exists.";
+        "Error, article with this title already exists.";
     } else if (postResponse.status === 404) {
       this.errorMessage.innerText = "Error, server doesn't exist.";
     } else if (postResponse.status === 201) {
       location.reload();
     }
   };
-  addToOrder(data){
-
-  }
+  addToOrder(data) {}
 }

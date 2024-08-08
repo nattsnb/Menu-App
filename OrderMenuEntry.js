@@ -66,37 +66,48 @@ export class OrderMenuEntry {
   plusIconFunctionality = () => {
     this.numberOfPlates = this.numberOfPlates + 1;
     this.numberDiv.innerHTML = this.numberOfPlates;
-    let productOrder = {
-      "quantity": this.numberOfPlates,
-      "id": this.dishAndPriceArray[this.i].id
+    const productOrder = {
+      quantity: this.numberOfPlates,
+      id: this.dishAndPriceArray[this.i].id,
+    };
+    console.log(productOrder);
+    if (this.numberOfPlates === 1) {
+      this.orderData.products.push(productOrder);
+    } else {
+      let obj = this.orderData.products.find(
+        (x) => x.id === this.dishAndPriceArray[this.i].id,
+      );
+      let index = this.orderData.products.indexOf(obj);
+      this.orderData.products.splice(index, 1);
+      this.orderData.products.push(productOrder);
     }
-    console.log(productOrder)
-    if(this.numberOfPlates > 0){
-      this.orderData.products.push(productOrder)
-      console.log(this.orderData)
-    }
+    console.log(this.orderData.products);
   };
 
   minusIconFunctionality = () => {
-    const beforeOrder = {
-      "quantity": this.numberOfPlates,
-      "id": this.dishAndPriceArray[this.i].id
-    }
-    console.log(beforeOrder)
     if (this.numberOfPlates > 0) {
       this.numberOfPlates = this.numberOfPlates - 1;
       this.numberDiv.innerHTML = this.numberOfPlates;
+      let productOrder = {
+        quantity: this.numberOfPlates,
+        id: this.dishAndPriceArray[this.i].id,
+      };
+      console.log(productOrder);
+      if (this.numberOfPlates === 0) {
+        let obj = this.orderData.products.find(
+          (x) => x.id === this.dishAndPriceArray[this.i].id,
+        );
+        let index = this.orderData.products.indexOf(obj);
+        this.orderData.products.splice(index, 1);
+      } else {
+        let obj = this.orderData.products.find(
+          (x) => x.id === this.dishAndPriceArray[this.i].id,
+        );
+        let index = this.orderData.products.indexOf(obj);
+        this.orderData.products.splice(index, 1);
+        this.orderData.products.push(productOrder);
+      }
+      console.log(this.orderData.products);
     }
-    let productOrder = {
-      "quantity": this.numberOfPlates,
-      "id": this.dishAndPriceArray[this.i].id
-    }
-    console.log(productOrder)
-    console.log(this.orderData.products)
-    if(this.orderData.products.includes(beforeOrder)){
-      console.log("is there")
-    }
-    this.orderData.products.push(productOrder)
-    console.log(this.orderData)
   };
 }

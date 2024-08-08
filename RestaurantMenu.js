@@ -9,8 +9,7 @@ export class RestaurantMenu {
     this.dishAndPriceArray = null;
     this.container = container;
     this.dataToPlaceOrder = {
-      "products": [
-      ]
+      products: [],
     };
   }
   fetchProductsDataAndDisplayEditableMenu = async () => {
