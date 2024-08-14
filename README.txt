@@ -7,15 +7,23 @@ Simple app made for customers place their orders online and to track them after.
 1. Pull repo to your directory
 2. Pull api repo https://github.com/Solnick/orders-products-simple-api
 3. Install and start api repo
-``` npm install '''
+
+``` npm install ```
+
 4. Run api repo on localhost 3000
-''' npm run start '''
+
+``` npm run start ```
+
 5. Start and install menu repo
-''' npm install '''
+
+``` npm install ```
+
 6. Run menu repo on other localhost
-''' npm run dev'''
+
+``` npm run dev ```
+
 
 ## Branches:
 
-# Master
+### Master
 Basic website file structure, nothing to display.
