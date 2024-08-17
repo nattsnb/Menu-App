@@ -176,15 +176,15 @@ export class OrderEntry {
       listParagraphName.innerText = this.findNameOfProductInDatabase(
         orderProducts[i].id,
       );
-      listParagraphName.classList.add("list-paragraph-name");
+      listParagraphName.classList.add("list-paragraph-name","list-paragraph");
       productWrapper.append(listParagraphName);
       const listParagraphX = document.createElement("p");
       listParagraphX.innerText = "x";
-      listParagraphX.classList.add("list-paragraph-x");
+      listParagraphX.classList.add("list-paragraph-x","list-paragraph");
       productWrapper.append(listParagraphX);
       const listParagraphQuantity = document.createElement("p");
       listParagraphQuantity.innerText = orderProducts[i].quantity;
-      listParagraphQuantity.classList.add("list-paragraph-quantity");
+      listParagraphQuantity.classList.add("list-paragraph-quantity","list-paragraph");
       productWrapper.append(listParagraphQuantity);
       container.append(productWrapper);
     }
