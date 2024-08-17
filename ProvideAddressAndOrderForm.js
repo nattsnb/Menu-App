@@ -56,7 +56,7 @@ export class ProvideAddressAndOrderForm {
       },
     });
     const newOrderData = await postResponse.json();
-    console.log(newOrderData);
+    console.log(newOrderData.id);
     if (postResponse.status === 400) {
       this.errorMessage.innerText = "Error, provide data.";
     } else if (postResponse.status === 404) {
@@ -64,8 +64,7 @@ export class ProvideAddressAndOrderForm {
     } else if (postResponse.status === 500) {
       this.errorMessage.innerText = "Error, internal server issue";
     } else if (postResponse.status === 201) {
-      /// CHANGE ORDER NUmBER IN HERE
-      this.orderNumber = "ORDER NUMBER";
+      this.orderNumber = newOrderData.id
       this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
       console.log("Data Sent");
       this.displayOrderConfirmation(this.orderNumber);
@@ -75,7 +74,7 @@ export class ProvideAddressAndOrderForm {
   displayOrderConfirmation(orderID) {
     const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
     if (confirm(message) === true) {
-      window.location.href = `http://localhost:3000/orders/${this.orderNumber}/`;
+      window.location.href = `http://localhost:3000/status/${this.orderNumber}/`;
     } else {
     }
   }
