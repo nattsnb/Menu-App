@@ -64,7 +64,7 @@ export class ProvideAddressAndOrderForm {
     } else if (postResponse.status === 500) {
       this.errorMessage.innerText = "Error, internal server issue";
     } else if (postResponse.status === 201) {
-      this.orderNumber = newOrderData.id
+      this.orderNumber = newOrderData.id;
       this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
       console.log("Data Sent");
       this.displayOrderConfirmation(this.orderNumber);
