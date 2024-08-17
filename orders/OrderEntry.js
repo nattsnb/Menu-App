@@ -12,6 +12,7 @@ export class OrderEntry {
     this.createOrderIdDiv();
     this.createStatusDiv();
     this.createErrorMessageParagraph();
+    this.createOrderInfoDiv();
     this.listContainer.append(this.row);
   }
   createOrderIdDiv() {
@@ -144,5 +145,23 @@ export class OrderEntry {
   createErrorMessageParagraph() {
     this.errorMessageParagraph = document.createElement("div");
     this.row.append(this.errorMessageParagraph);
+  }
+
+  createOrderInfoDiv(){
+    const orderProducts = this.ordersDataAraay[this.orderEntryNumber].products
+    const title = document.createElement("div");
+    title.innerText = "Order content:";
+    const productsDiv = document.createElement("div");
+    productsDiv.classList.add("list-products-div");
+    for(let i = 0; i < orderProducts.length; i++){
+      const paragraph = document.createElement("p")
+      paragraph.innerText =  `${orderProducts[i].name}x${orderProducts[i].quantity}`
+      productsDiv.append(paragraph)
+    }
+    const addressDiv = document.createElement("div");
+    addressDiv.classList.add("list-address-div");
+    this.row.append(title);
+    this.row.append(productsDiv);
+    this.row.append(addressDiv);
   }
 }
