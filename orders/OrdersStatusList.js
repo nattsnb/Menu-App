@@ -11,7 +11,7 @@ export class OrdersStatusList {
     const fetchedData = await fetch(this.productsServerAddress);
     if (fetchedData.status === 200) {
       this.ordersArray = await fetchedData.json();
-      console.log(this.ordersArray)
+      console.log(this.ordersArray);
       this.displayOrdersStatusList();
     } else {
       this.container.innerText = "Server error.";
