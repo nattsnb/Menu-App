@@ -18,6 +18,7 @@ export class OrderEntry {
     const title = document.createElement("div");
     title.innerText = "Order ID:";
     const orderID = document.createElement("div");
+    orderID.classList.add("list-order-id")
     orderID.innerText = this.ordersDataAraay[this.orderEntryNumber].id;
     this.row.append(title);
     this.row.append(orderID);
@@ -33,6 +34,7 @@ export class OrderEntry {
   createDropdownWithClickChangeListeners(container) {
     const fragment = document.createDocumentFragment();
     const select = document.createElement("select");
+    select.classList.add("list-select")
     const optionProgress = new Option("InProgress", "InProgress", false);
     select.options.add(optionProgress);
     const optionDelivery = new Option("Delivery", "Delivery", false);
