@@ -64,7 +64,19 @@ export class ProvideAddressAndOrderForm {
     } else if (postResponse.status === 500) {
       this.errorMessage.innerText = "Error, internal server issue";
     } else if (postResponse.status === 201) {
+      /// CHANGE ORDER NUmBER IN HERE
+      this.orderNumber = "ORDER NUMBER";
+      this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
       console.log("Data Sent");
+      this.displayOrderConfirmation(this.orderNumber);
     }
   };
+
+  displayOrderConfirmation(orderID) {
+    const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
+    if (confirm(message) === true) {
+      window.location.href = `http://localhost:3000/orders/${this.orderNumber}/`;
+    } else {
+    }
+  }
 }
