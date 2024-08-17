@@ -18,7 +18,7 @@ export class OrderEntry {
     const title = document.createElement("div");
     title.innerText = "Order ID:";
     const orderID = document.createElement("div");
-    orderID.classList.add("list-order-id")
+    orderID.classList.add("list-order-id");
     orderID.innerText = this.ordersDataAraay[this.orderEntryNumber].id;
     this.row.append(title);
     this.row.append(orderID);
@@ -34,49 +34,43 @@ export class OrderEntry {
   createDropdownWithClickChangeListeners(container) {
     const fragment = document.createDocumentFragment();
     const select = document.createElement("select");
-    select.classList.add("list-select")
-    const optionProgress = new Option("InProgress", "InProgress", false);
-    select.options.add(optionProgress);
-    const optionDelivery = new Option("Delivery", "Delivery", false);
-    select.options.add(optionDelivery);
-    const optionFinished = new Option("Finished", "Finished", false);
-    select.options.add(optionFinished);
-    if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
-      console.log("finished");
-      console.log(optionFinished);
-      optionFinished.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "Delivery"
-    ) {
-      console.log("delivery");
-      console.log(optionDelivery);
-      optionDelivery.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "InProgress"
-    ) {
-      console.log("progress");
-      console.log(optionProgress);
-      optionProgress.setAttribute("selected", true);
-    }
+    select.classList.add("list-select");
+    this.optionProgress = new Option("InProgress", "InProgress", false);
+    select.options.add(this.optionProgress);
+    this.optionDelivery = new Option("Delivery", "Delivery", false);
+    select.options.add(this.optionDelivery);
+    this.optionFinished = new Option("Finished", "Finished", false);
+    select.options.add(this.optionFinished);
+    this.setSelectedAttributeInOrderToOrderStatus();
     select.addEventListener("change", () => {
       this.errorMessageParagraph.innerText = "";
       switch (select.value) {
         case "InProgress":
-          console.log("In progress.");
           this.changeToProgress();
           break;
         case "Delivery":
-          console.log("In delivery.");
           this.changeToDelivery();
           break;
         case "Finished":
-          console.log("Finished.");
           this.changeToFinished();
           break;
       }
     });
     fragment.appendChild(select);
     container.appendChild(fragment);
+  }
+  setSelectedAttributeInOrderToOrderStatus() {
+    if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
+      this.optionFinished.setAttribute("selected", true);
+    } else if (
+      this.ordersDataAraay[this.orderEntryNumber].status === "Delivery"
+    ) {
+      this.optionDelivery.setAttribute("selected", true);
+    } else if (
+      this.ordersDataAraay[this.orderEntryNumber].status === "InProgress"
+    ) {
+      this.optionProgress.setAttribute("selected", true);
+    }
   }
   changeToProgress = async () => {
     const data = {
@@ -100,7 +94,6 @@ export class OrderEntry {
     } else if (progressResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
     } else if (progressResponse.status === 200) {
-      console.log("made it");
     }
   };
   changeToDelivery = async () => {
@@ -125,7 +118,6 @@ export class OrderEntry {
     } else if (deliveryResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
     } else if (deliveryResponse.status === 200) {
-      console.log("made it");
     }
   };
   changeToFinished = async () => {
@@ -150,7 +142,6 @@ export class OrderEntry {
     } else if (finishedResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
     } else if (finishedResponse.status === 200) {
-      console.log("made it");
     }
   };
   createErrorMessageParagraph() {
