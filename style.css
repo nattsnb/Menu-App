@@ -197,3 +197,15 @@ input {
   font-size: 30px;
   background-color: darkorange;
 }
+
+.list-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-style: solid;
+  border-width: 4px;
+  border-style: double;
+  border-radius: 14px;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-weight: bold;
+}
