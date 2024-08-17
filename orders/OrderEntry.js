@@ -35,7 +35,7 @@ export class OrderEntry {
     const select = document.createElement("select");
     const optionProgress = new Option("InProgress", "InProgress", false);
     select.options.add(optionProgress);
-    const optionDelivery = new Option("InDelivery", "InDelivery", false);
+    const optionDelivery = new Option("Delivery", "Delivery", false);
     select.options.add(optionDelivery);
     const optionFinished = new Option("Finished", "Finished", false);
     select.options.add(optionFinished);
@@ -44,7 +44,7 @@ export class OrderEntry {
       console.log(optionFinished);
       optionFinished.setAttribute("selected", true);
     } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "InDelivery"
+      this.ordersDataAraay[this.orderEntryNumber].status === "Delivery"
     ) {
       console.log("delivery");
       console.log(optionDelivery);
@@ -56,7 +56,23 @@ export class OrderEntry {
       console.log(optionProgress);
       optionProgress.setAttribute("selected", true);
     }
-
+    select.addEventListener("change", () => {
+      this.errorMessageParagraph.innerText = "";
+      switch (select.value) {
+        case "InProgress":
+          console.log("In progress.");
+          this.changeToProgress();
+          break;
+        case "Delivery":
+          console.log("In delivery.");
+          this.changeToDelivery();
+          break;
+        case "Finished":
+          console.log("Finished.");
+          this.changeToFinished();
+          break;
+      }
+    });
     fragment.appendChild(select);
     container.appendChild(fragment);
   }
@@ -65,7 +81,7 @@ export class OrderEntry {
       address: this.ordersDataAraay[this.orderEntryNumber].address,
       id: this.ordersDataAraay[this.orderEntryNumber].id,
       products: this.ordersDataAraay[this.orderEntryNumber].products,
-      status: "in progress",
+      status: "InProgress",
     };
     const progressResponse = await fetch(
       `http://localhost:3000/orders/${data.id}`,
@@ -90,7 +106,7 @@ export class OrderEntry {
       address: this.ordersDataAraay[this.orderEntryNumber].address,
       id: this.ordersDataAraay[this.orderEntryNumber].id,
       products: this.ordersDataAraay[this.orderEntryNumber].products,
-      status: "being delivered",
+      status: "Delivery",
     };
     const deliveryResponse = await fetch(
       `http://localhost:3000/orders/${data.id}`,
