@@ -61,6 +61,8 @@ export class ProvideAddressAndOrderForm {
       this.errorMessage.innerText = "Error, provide data.";
     } else if (postResponse.status === 404) {
       this.errorMessage.innerText = "Error, server doesn't exist.";
+    } else if (postResponse.status === 500) {
+      this.errorMessage.innerText = "Error, internal server issue";
     } else if (postResponse.status === 201) {
       console.log("Data Sent");
     }
