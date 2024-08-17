@@ -1,17 +1,18 @@
 import { OrderEntry } from "./OrderEntry.js";
 
 export class OrdersStatusList {
-  constructor(container, productsServerAddress) {
+  constructor(container, ordersServerAddress, productsServerAddress) {
     this.container = container;
+    this.ordersServerAddress = ordersServerAddress;
     this.productsServerAddress = productsServerAddress;
     this.ordersArray = null;
     this.fetchOrdersAndDisplayOrdersStatusList();
   }
   fetchOrdersAndDisplayOrdersStatusList = async () => {
-    const fetchedData = await fetch(this.productsServerAddress);
-    if (fetchedData.status === 200) {
-      this.ordersArray = await fetchedData.json();
-      this.displayOrdersStatusList();
+    const fetchedOrdersData = await fetch(this.ordersServerAddress);
+    if (fetchedOrdersData.status === 200) {
+      this.ordersArray = await fetchedOrdersData.json();
+      await this.fetchProductsDatabase();
     } else {
       this.container.innerText = "Server error.";
     }
@@ -24,7 +25,16 @@ export class OrdersStatusList {
     listContainer.setAttribute("id", "list-container");
     this.container.append(listContainer);
     for (let i = 0; i < this.ordersArray.length; i++) {
-      new OrderEntry(this.ordersArray, listContainer, i);
+      new OrderEntry(this.ordersArray, listContainer, i, this.productsArray);
     }
   }
+  fetchProductsDatabase = async () => {
+    const fetchedProductsData = await fetch(this.productsServerAddress);
+    if (fetchedProductsData.status === 200) {
+      this.productsArray = await fetchedProductsData.json();
+      this.displayOrdersStatusList();
+    } else {
+      this.container.innerText = "Server error.";
+    }
+  };
 }

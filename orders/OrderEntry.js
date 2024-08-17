@@ -1,8 +1,9 @@
 export class OrderEntry {
-  constructor(ordersDataArray, listContainer, i) {
+  constructor(ordersDataArray, listContainer, i, productsDatabase) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
+    this.productsDatabase = productsDatabase;
     this.row = null;
     this.createListEntry();
   }
@@ -147,21 +148,55 @@ export class OrderEntry {
     this.row.append(this.errorMessageParagraph);
   }
 
-  createOrderInfoDiv(){
-    const orderProducts = this.ordersDataAraay[this.orderEntryNumber].products
-    const title = document.createElement("div");
-    title.innerText = "Order content:";
+  createOrderInfoDiv() {
+    const titleContent = document.createElement("div");
+    titleContent.innerText = "Order content:";
     const productsDiv = document.createElement("div");
     productsDiv.classList.add("list-products-div");
-    for(let i = 0; i < orderProducts.length; i++){
-      const paragraph = document.createElement("p")
-      paragraph.innerText =  `${orderProducts[i].name}x${orderProducts[i].quantity}`
-      productsDiv.append(paragraph)
-    }
+    this.insertProductInfo(
+      productsDiv,
+      this.ordersDataAraay[this.orderEntryNumber].products,
+    );
+    const titleAddress = document.createElement("div");
+    titleAddress.innerText = "Delivery address:";
     const addressDiv = document.createElement("div");
     addressDiv.classList.add("list-address-div");
-    this.row.append(title);
+    addressDiv.innerText = this.ordersDataAraay[this.orderEntryNumber].address;
+    this.row.append(titleContent);
     this.row.append(productsDiv);
+    this.row.append(titleAddress);
     this.row.append(addressDiv);
   }
+
+  insertProductInfo(container, orderProducts) {
+    for (let i = 0; i < orderProducts.length; i++) {
+      const productWrapper = document.createElement("div");
+      productWrapper.classList.add("list-products-wrapper");
+      const listParagraphName = document.createElement("p");
+      listParagraphName.innerText = this.findNameOfProductInDatabase(
+        orderProducts[i].id,
+      );
+      listParagraphName.classList.add("list-paragraph-name");
+      productWrapper.append(listParagraphName);
+      const listParagraphX = document.createElement("p");
+      listParagraphX.innerText = "x";
+      listParagraphX.classList.add("list-paragraph-x");
+      productWrapper.append(listParagraphX);
+      const listParagraphQuantity = document.createElement("p");
+      listParagraphQuantity.innerText = orderProducts[i].quantity;
+      listParagraphQuantity.classList.add("list-paragraph-quantity");
+      productWrapper.append(listParagraphQuantity);
+      container.append(productWrapper);
+    }
+  }
+  findNameOfProductInDatabase = (id) => {
+    const productIndex = this.productsDatabase.findIndex(function (product) {
+      return product.id === id;
+    });
+    if (productIndex !== -1) {
+      return this.productsDatabase[productIndex].name;
+    } else {
+      return "old dish";
+    }
+  };
 }
