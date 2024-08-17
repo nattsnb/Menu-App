@@ -93,7 +93,6 @@ export class OrderEntry {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (progressResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
-    } else if (progressResponse.status === 200) {
     }
   };
   changeToDelivery = async () => {
@@ -117,7 +116,6 @@ export class OrderEntry {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (deliveryResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
-    } else if (deliveryResponse.status === 200) {
     }
   };
   changeToFinished = async () => {
@@ -141,7 +139,6 @@ export class OrderEntry {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (finishedResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
-    } else if (finishedResponse.status === 200) {
     }
   };
   createErrorMessageParagraph() {
