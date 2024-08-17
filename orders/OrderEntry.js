@@ -25,11 +25,11 @@ export class OrderEntry {
     const title = document.createElement("div");
     title.innerText = "Status:";
     const dropdownDiv = document.createElement("div");
-    this.createDropdown(dropdownDiv);
+    this.createDropdownWithClickChangeListeners(dropdownDiv);
     this.row.append(title);
     this.row.append(dropdownDiv);
   }
-  createDropdown(container) {
+  createDropdownWithClickChangeListeners(container) {
     const fragment = document.createDocumentFragment();
     const select = document.createElement("select");
     select.options.add(new Option("In progress", "progress", true, true));
