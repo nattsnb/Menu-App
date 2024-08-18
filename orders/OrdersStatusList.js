@@ -31,7 +31,7 @@ export class OrdersStatusList {
         i,
         this.localProductDatabase,
         this.productsServerAddress,
-          this
+        this,
       );
     }
   }
@@ -45,7 +45,7 @@ export class OrdersStatusList {
     }
   };
 
-  refresh=async()=>{
-    await this.fetchProductsDatabase
-  }
+  refresh = async () => {
+    await this.fetchProductsDatabase;
+  };
 }

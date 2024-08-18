@@ -5,14 +5,13 @@ export class OrderEntry {
     i,
     localProductDatabase,
     productServerAddress,
-    theList
+    theList,
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
     this.productServerAddress = productServerAddress;
-    this.theList = theList;
     this.row = null;
     this.createListEntry();
   }
@@ -177,13 +176,14 @@ export class OrderEntry {
     this.row.append(addressDiv);
   }
 
-  insertProductInfo(container, orderProducts) {
+  insertProductInfo = async (container, orderProducts) => {
     for (let i = 0; i < orderProducts.length; i++) {
       const productWrapper = document.createElement("div");
       productWrapper.classList.add("list-products-wrapper");
       const listParagraphName = document.createElement("p");
-      listParagraphName.innerText = this.findNameOfProductInDatabase(
+      listParagraphName.innerText = await this.findNameOfProductInDatabase(
         orderProducts[i].id,
+        container,
       );
       listParagraphName.classList.add("list-paragraph-name", "list-paragraph");
       productWrapper.append(listParagraphName);
@@ -200,8 +200,8 @@ export class OrderEntry {
       productWrapper.append(listParagraphQuantity);
       container.append(productWrapper);
     }
-  }
-  findNameOfProductInDatabase = (id, container) => {
+  };
+  findNameOfProductInDatabase = async (id, container) => {
     const productIndex = this.localProductDatabase.findIndex(
       function (product) {
         return product.id === id;
@@ -210,8 +210,11 @@ export class OrderEntry {
     if (productIndex !== -1) {
       return this.localProductDatabase[productIndex].name;
     } else {
-      const newEntryToDatabase = (this.askServerForDeletedProduct(id, container)).result;
-      this.localProductDatabase.push(newEntryToDatabase);
+      const newEntryPromiseResult = await this.askServerForDeletedProduct(
+        id,
+        container,
+      );
+      return newEntryPromiseResult;
     }
   };
   askServerForDeletedProduct = async (id, container) => {
@@ -220,9 +223,10 @@ export class OrderEntry {
     );
     if (fetchedDeletedProductData.status === 200) {
       const deletedProductResponse = await fetchedDeletedProductData.json();
-      return deletedProductResponse.name
+      return deletedProductResponse.name;
     } else {
       container.innerText = "Server error.";
+      return null;
     }
   };
 }
