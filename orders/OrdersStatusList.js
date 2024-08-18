@@ -25,13 +25,19 @@ export class OrdersStatusList {
     listContainer.setAttribute("id", "list-container");
     this.container.append(listContainer);
     for (let i = 0; i < this.ordersArray.length; i++) {
-      new OrderEntry(this.ordersArray, listContainer, i, this.productsArray);
+      new OrderEntry(
+        this.ordersArray,
+        listContainer,
+        i,
+        this.localProductDatabase,
+        this.productsServerAddress,
+      );
     }
   }
   fetchProductsDatabase = async () => {
     const fetchedProductsData = await fetch(this.productsServerAddress);
     if (fetchedProductsData.status === 200) {
-      this.productsArray = await fetchedProductsData.json();
+      this.localProductDatabase = await fetchedProductsData.json();
       this.displayOrdersStatusList();
     } else {
       this.container.innerText = "Server error.";

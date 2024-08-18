@@ -1,9 +1,16 @@
 export class OrderEntry {
-  constructor(ordersDataArray, listContainer, i, productsDatabase) {
+  constructor(
+    ordersDataArray,
+    listContainer,
+    i,
+    localProductDatabase,
+    productServerAddress,
+  ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
-    this.productsDatabase = productsDatabase;
+    this.localProductDatabase = localProductDatabase;
+    this.productServerAddress = productServerAddress;
     this.row = null;
     this.createListEntry();
   }
@@ -176,27 +183,45 @@ export class OrderEntry {
       listParagraphName.innerText = this.findNameOfProductInDatabase(
         orderProducts[i].id,
       );
-      listParagraphName.classList.add("list-paragraph-name","list-paragraph");
+      listParagraphName.classList.add("list-paragraph-name", "list-paragraph");
       productWrapper.append(listParagraphName);
       const listParagraphX = document.createElement("p");
       listParagraphX.innerText = "x";
-      listParagraphX.classList.add("list-paragraph-x","list-paragraph");
+      listParagraphX.classList.add("list-paragraph-x", "list-paragraph");
       productWrapper.append(listParagraphX);
       const listParagraphQuantity = document.createElement("p");
       listParagraphQuantity.innerText = orderProducts[i].quantity;
-      listParagraphQuantity.classList.add("list-paragraph-quantity","list-paragraph");
+      listParagraphQuantity.classList.add(
+        "list-paragraph-quantity",
+        "list-paragraph",
+      );
       productWrapper.append(listParagraphQuantity);
       container.append(productWrapper);
     }
   }
-  findNameOfProductInDatabase = (id) => {
-    const productIndex = this.productsDatabase.findIndex(function (product) {
-      return product.id === id;
-    });
+  findNameOfProductInDatabase = (id, container) => {
+    const productIndex = this.localProductDatabase.findIndex(
+      function (product) {
+        return product.id === id;
+      },
+    );
     if (productIndex !== -1) {
-      return this.productsDatabase[productIndex].name;
+      return this.localProductDatabase[productIndex].name;
     } else {
-      return "old dish";
+      const newEntryToDatabase = this.askServerForDeletedProduct(id, container);
+      this.localProductDatabase.push(newEntryToDatabase);
+      console.log(this.localProductDatabase);
+    }
+  };
+  askServerForDeletedProduct = async (id, container) => {
+    const fetchedDeletedProductData = await fetch(
+      `${this.productServerAddress}${id}/`,
+    );
+    if (fetchedDeletedProductData.status === 200) {
+      const response = await fetchedDeletedProductData.json();
+      return response.name;
+    } else {
+      container.innerText = "Server error.";
     }
   };
 }
