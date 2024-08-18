@@ -32,6 +32,7 @@ export class OrdersStatusList {
         i,
         this.localProductDatabase,
         this.productsServerAddress,
+        this,
       );
     }
   }

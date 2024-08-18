@@ -5,12 +5,14 @@ export class OrderEntry {
     i,
     localProductDatabase,
     productServerAddress,
+    list,
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
     this.productServerAddress = productServerAddress;
+    this.list = list;
     this.row = null;
     this.createListEntry();
   }
@@ -98,6 +100,9 @@ export class OrderEntry {
         },
       },
     );
+    if (progressResponse.status === 200) {
+      location.reload();
+    }
     if (progressResponse.status === 400) {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (progressResponse.status === 404) {
@@ -144,7 +149,9 @@ export class OrderEntry {
         },
       },
     );
-    if (finishedResponse.status === 400) {
+    if (finishedResponse.status === 200) {
+      console.log("changed");
+    } else if (finishedResponse.status === 400) {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (finishedResponse.status === 404) {
       this.errorMessageParagraph.innerText = "Server error.";
