@@ -31,6 +31,7 @@ export class OrdersStatusList {
         i,
         this.localProductDatabase,
         this.productsServerAddress,
+          this
       );
     }
   }
@@ -43,4 +44,8 @@ export class OrdersStatusList {
       this.container.innerText = "Server error.";
     }
   };
+
+  refresh=async()=>{
+    await this.fetchProductsDatabase
+  }
 }

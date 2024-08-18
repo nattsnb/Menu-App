@@ -5,12 +5,14 @@ export class OrderEntry {
     i,
     localProductDatabase,
     productServerAddress,
+    theList
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
     this.productServerAddress = productServerAddress;
+    this.theList = theList;
     this.row = null;
     this.createListEntry();
   }
@@ -208,9 +210,8 @@ export class OrderEntry {
     if (productIndex !== -1) {
       return this.localProductDatabase[productIndex].name;
     } else {
-      const newEntryToDatabase = this.askServerForDeletedProduct(id, container);
+      const newEntryToDatabase = (this.askServerForDeletedProduct(id, container)).result;
       this.localProductDatabase.push(newEntryToDatabase);
-      console.log(this.localProductDatabase);
     }
   };
   askServerForDeletedProduct = async (id, container) => {
@@ -218,8 +219,8 @@ export class OrderEntry {
       `${this.productServerAddress}${id}/`,
     );
     if (fetchedDeletedProductData.status === 200) {
-      const response = await fetchedDeletedProductData.json();
-      return response.name;
+      const deletedProductResponse = await fetchedDeletedProductData.json();
+      return deletedProductResponse.name
     } else {
       container.innerText = "Server error.";
     }
