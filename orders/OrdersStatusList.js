@@ -12,6 +12,7 @@ export class OrdersStatusList {
     const fetchedOrdersData = await fetch(this.ordersServerAddress);
     if (fetchedOrdersData.status === 200) {
       this.ordersArray = await fetchedOrdersData.json();
+      this.sortOrderArray();
       await this.fetchProductsDatabase();
     } else {
       this.container.innerText = "Server error.";
@@ -44,7 +45,21 @@ export class OrdersStatusList {
     }
   };
 
-  refresh = async () => {
-    await this.fetchProductsDatabase;
-  };
+  sortOrderArray() {
+    this.ordersArray.sort((a, b) => {
+      if (a.status === "InProgress" && b.status === "InDelivery") {
+        return -1;
+      } else if (a.status === "InDelivery" && b.status === "Finished") {
+        return -1;
+      } else if (a.status === "InProgress" && b.status === "Finished") {
+        return -1;
+      } else if (a.status === "Finished" && b.status === "InDelivery") {
+        return 1;
+      } else if (a.status === "Finished" && b.status === "InProgress") {
+        return 1;
+      } else if (a.status === "InDelivery" && b.status === "InProgress") {
+        return 1;
+      }
+    });
+  }
 }
