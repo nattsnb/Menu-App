@@ -5,7 +5,6 @@ export class OrderEntry {
     i,
     localProductDatabase,
     productServerAddress,
-    theList,
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
