@@ -126,6 +126,9 @@ export class OrderEntry {
         },
       },
     );
+    if (deliveryResponse.status === 200) {
+      location.reload();
+    }
     if (deliveryResponse.status === 400) {
       this.errorMessageParagraph.innerText = "Error, provide valid data.";
     } else if (deliveryResponse.status === 404) {
@@ -149,6 +152,9 @@ export class OrderEntry {
         },
       },
     );
+    if (finishedResponse.status === 200) {
+      location.reload();
+    }
     if (finishedResponse.status === 200) {
       console.log("changed");
     } else if (finishedResponse.status === 400) {
