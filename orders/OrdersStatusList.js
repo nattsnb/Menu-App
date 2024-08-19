@@ -5,19 +5,22 @@ export class OrdersStatusList {
     this.container = container;
     this.ordersServerAddress = ordersServerAddress;
     this.productsServerAddress = productsServerAddress;
-    this.ordersArray = null;
+    this.ordersArray = [];
     this.fetchOrdersAndDisplayOrdersStatusList();
   }
+
   fetchOrdersAndDisplayOrdersStatusList = async () => {
     const fetchedOrdersData = await fetch(this.ordersServerAddress);
     if (fetchedOrdersData.status === 200) {
       this.ordersArray = await fetchedOrdersData.json();
-      this.sortOrderArray();
+      this.sortOrdersArray();
+      console.log(this.ordersArray);
       await this.fetchProductsDatabase();
     } else {
       this.container.innerText = "Server error.";
     }
   };
+
   displayOrdersStatusList() {
     const title = document.createElement("h1");
     title.innerText = "Orders";
@@ -36,6 +39,7 @@ export class OrdersStatusList {
       );
     }
   }
+
   fetchProductsDatabase = async () => {
     const fetchedProductsData = await fetch(this.productsServerAddress);
     if (fetchedProductsData.status === 200) {
@@ -46,21 +50,17 @@ export class OrdersStatusList {
     }
   };
 
-  sortOrderArray() {
-    this.ordersArray.sort((a, b) => {
-      if (a.status === "InProgress" && b.status === "InDelivery") {
-        return -1;
-      } else if (a.status === "InDelivery" && b.status === "Finished") {
-        return -1;
-      } else if (a.status === "InProgress" && b.status === "Finished") {
-        return -1;
-      } else if (a.status === "Finished" && b.status === "InDelivery") {
+  sortOrdersArray() {
+    this.ordersArray
+      .sort((a, b) => {
+        if (a.status === "Finished") {
+          return -1;
+        }
+        if (a.status === "Delivery" && b.status === "InProgress") {
+          return -1;
+        }
         return 1;
-      } else if (a.status === "Finished" && b.status === "InProgress") {
-        return 1;
-      } else if (a.status === "InDelivery" && b.status === "InProgress") {
-        return 1;
-      }
-    });
+      })
+      .reverse();
   }
 }
