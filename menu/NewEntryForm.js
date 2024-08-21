@@ -1,12 +1,13 @@
 import { EditableMenuEntry } from "./EditableMenuEntry.js";
 
 export class NewEntryForm {
-  constructor(container) {
+  constructor(container, menu) {
     this.container = container;
+    this.menu = menu;
     this.createNewEntryForm();
     this.initializeNewArticleForm();
   }
-  createNewEntryForm() {
+  createNewEntryForm = () => {
     const headline = document.createElement("h2");
     headline.innerText = "New Menu entry:";
     this.newEntryForm = document.createElement("form");
@@ -25,33 +26,27 @@ export class NewEntryForm {
     this.newEntryForm.append(this.errorMessage);
     this.container.append(headline);
     this.container.append(this.newEntryForm);
-  }
-  createNewEntryInputs() {
+  };
+  createNewEntryInputs = () => {
     this.dishNameInput = document.createElement("input");
     this.dishNameInput.placeholder = "Dish name";
     this.dishNameInput.classList.add("new-dish-name-input");
     this.priceInEURInput = document.createElement("input");
     this.priceInEURInput.placeholder = "0.0";
     this.priceInEURInput.classList.add("new-price-input");
-  }
-  initializeNewArticleForm() {
+  };
+  initializeNewArticleForm = () => {
     this.newEntryForm.addEventListener("submit", (event) => {
       event.preventDefault();
       this.postNewEntry();
     });
-  }
+  };
   postNewEntry = async () => {
-    const dataToSend = {
+    const dataToPost = {
       name: this.dishNameInput.value,
       priceInEUR: Number(this.priceInEURInput.value),
     };
-    const postResponse = await fetch("http://localhost:3000/products/", {
-      method: "POST",
-      body: JSON.stringify(dataToSend),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const postResponse = await this.menu.productsAPI.postNewProduct(dataToPost);
     const newEntryData = await postResponse.json();
     if (postResponse.status === 400) {
       this.errorMessage.innerText = "Error, provide data.";
