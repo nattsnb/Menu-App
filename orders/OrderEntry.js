@@ -90,24 +90,17 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "InProgress",
     };
-    const progressResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const progressResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (progressResponse.status === 200) {
       location.reload();
     }
-    if (progressResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (progressResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      progressResponse,
+      this.errorMessageParagraph,
+    );
   };
   changeToDelivery = async () => {
     const data = {
@@ -116,24 +109,17 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "Delivery",
     };
-    const deliveryResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const deliveryResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (deliveryResponse.status === 200) {
       location.reload();
     }
-    if (deliveryResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (deliveryResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      deliveryResponse,
+      this.errorMessageParagraph,
+    );
   };
   changeToFinished = async () => {
     const data = {
@@ -142,26 +128,17 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "Finished",
     };
-    const finishedResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const finishedResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (finishedResponse.status === 200) {
       location.reload();
     }
-    if (finishedResponse.status === 200) {
-      console.log("changed");
-    } else if (finishedResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (finishedResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      finishedResponse,
+      this.errorMessageParagraph,
+    );
   };
   createErrorMessageParagraph() {
     this.errorMessageParagraph = document.createElement("div");
@@ -230,15 +207,16 @@ export class OrderEntry {
     }
   };
   askServerForDeletedProduct = async (id, container) => {
-    const fetchedDeletedProductData = await fetch(
-      `${this.productServerAddress}${id}/`,
-    );
+    const fetchedDeletedProductData =
+      await this.list.productsAPI.getDeletedProduct(id);
     if (fetchedDeletedProductData.status === 200) {
       const deletedProductResponse = await fetchedDeletedProductData.json();
       return deletedProductResponse.name;
     } else {
-      container.innerText = "Server error.";
-      return null;
+      this.list.productsAPI.handleResponse(
+        fetchedDeletedProductData,
+        this.errorMessageParagraph,
+      );
     }
   };
 }

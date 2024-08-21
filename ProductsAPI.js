@@ -6,6 +6,10 @@ export class ProductsAPI {
     return fetch(`${this.serverAddress}products/`);
   };
 
+  getDeletedProduct = (id) => {
+    return fetch(`${this.serverAddress}products/${id}`);
+  };
+
   patchProduct = (dataToPost, id) => {
     return fetch(`http://localhost:3000/products/${id}`, {
       method: "PATCH",

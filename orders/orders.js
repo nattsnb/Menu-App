@@ -1,7 +1,6 @@
 import "../style.css";
 import { OrdersStatusList } from "./OrdersStatusList.js";
 
-const ordersServerAddress = "http://localhost:3000/orders/";
-const productsServerAddress = "http://localhost:3000/products/";
+const serverAddress = "http://localhost:3000/";
 const bodyContainer = document.getElementById("body-container");
-new OrdersStatusList(bodyContainer, ordersServerAddress, productsServerAddress);
+new OrdersStatusList(bodyContainer, serverAddress);

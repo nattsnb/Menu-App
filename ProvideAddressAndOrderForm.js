@@ -41,7 +41,11 @@ export class ProvideAddressAndOrderForm {
   initializeProvideAddressAndOrderForm() {
     this.provideAddressAndOrderForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if((this.streetInput.value && this.townInput.value && this.townPostCodeInput.value) !== "") {
+      if (
+        (this.streetInput.value &&
+          this.townInput.value &&
+          this.townPostCodeInput.value) !== ""
+      ) {
         this.sendTheOrder();
       } else {
         this.errorMessage.innerText = "Provide address, please";
@@ -52,14 +56,15 @@ export class ProvideAddressAndOrderForm {
   sendTheOrder = async () => {
     const orderDataAndAddress = this.orderData;
     orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
-    const postResponse = await this.menu.ordersAPI.postNewOrder(orderDataAndAddress)
+    const postResponse =
+      await this.menu.ordersAPI.postNewOrder(orderDataAndAddress);
     const newOrderData = await postResponse.json();
     if (postResponse.status === 201) {
-      this.orderNumber = newOrderData.id
+      this.orderNumber = newOrderData.id;
       this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
       this.displayOrderConfirmation();
     } else {
-      this.menu.ordersAPI.handleResponse(postResponse, this.errorMessage)
+      this.menu.ordersAPI.handleResponse(postResponse, this.errorMessage);
     }
   };
 

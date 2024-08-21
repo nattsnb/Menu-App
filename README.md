@@ -33,7 +33,9 @@ Basic website file structure, nothing to display.
 Website where owner can introduce changes or new entries to the products category on API server. Every entry on displayed list of products that have been already in menu have two buttons. Edit - turns entry into the form where we can introduce and save changes, and delete - one that soft deletes the product from server changing isDeleted key value to yes. Soft deleted products do not appear on any version of menu.
 
 ### Order Menu
+
 Website where customer can edit and place the order. Plus/minus buttons allows to add number of dishes to order. Form asks to provide the address. If both provided it does create new order on the server and pops out confirmation to move to order status tracking page.
 
 ### Orders Status
+
 Website where owner sees all orders that were placed. They can change status of the order from dropdown-list. the dropdown-list default option is the current order status. after choosing another option the patch fetch is sent. The orders are displayed in order: InProgress, Delivery, Finished. After changing the status the website is being refreshed to keep the order intact.
