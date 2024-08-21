@@ -6,7 +6,7 @@ export class NewEntryForm {
     this.createNewEntryForm();
     this.initializeNewArticleForm();
   }
-  createNewEntryForm() {
+  createNewEntryForm = () => {
     const headline = document.createElement("h2");
     headline.innerText = "New Menu entry:";
     this.newEntryForm = document.createElement("form");
@@ -25,21 +25,21 @@ export class NewEntryForm {
     this.newEntryForm.append(this.errorMessage);
     this.container.append(headline);
     this.container.append(this.newEntryForm);
-  }
-  createNewEntryInputs() {
+  };
+  createNewEntryInputs = () => {
     this.dishNameInput = document.createElement("input");
     this.dishNameInput.placeholder = "Dish name";
     this.dishNameInput.classList.add("new-dish-name-input");
     this.priceInEURInput = document.createElement("input");
     this.priceInEURInput.placeholder = "0.0";
     this.priceInEURInput.classList.add("new-price-input");
-  }
-  initializeNewArticleForm() {
+  };
+  initializeNewArticleForm = () => {
     this.newEntryForm.addEventListener("submit", (event) => {
       event.preventDefault();
       this.postNewEntry();
     });
-  }
+  };
   postNewEntry = async () => {
     const dataToSend = {
       name: this.dishNameInput.value,

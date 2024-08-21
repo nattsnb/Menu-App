@@ -1,22 +1,23 @@
 import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
 import { NewEntryForm } from "/menu/NewEntryForm.js";
+import { ProductsAPI } from "./ProductsAPI.js";
 
 export class RestaurantMenu {
-  constructor(container, productsServerAddress) {
-    this.productsServerAddress = productsServerAddress;
+  constructor(container, serverAddress) {
+    this.serverAddress = serverAddress;
     this.dishAndPriceArray = null;
     this.container = container;
+    this.createProductsAPIAndDisplayEditableMenu();
   }
-  fetchProductsDataAndDisplayEditableMenu = async () => {
-    const fetchedData = await fetch(this.productsServerAddress);
-    if (fetchedData.status === 200) {
-      this.dishAndPriceArray = await fetchedData.json();
-      this.displayEditableMenu();
-    } else {
-      this.container.innerText = "Server error.";
-    }
+
+  createProductsAPIAndDisplayEditableMenu = async () => {
+    this.productsAPI = new ProductsAPI(this.serverAddress);
+    const productsResponse = await this.productsAPI.getProducts();
+    this.dishAndPriceArray = await productsResponse.json();
+    this.displayEditableMenu();
   };
-  displayEditableMenu() {
+
+  displayEditableMenu = () => {
     const title = document.createElement("h1");
     title.innerText = "Edit Menu";
     this.container.append(title);
@@ -27,5 +28,5 @@ export class RestaurantMenu {
       new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i);
     }
     const newEntryForm = new NewEntryForm(this.container);
-  }
+  };
 }
