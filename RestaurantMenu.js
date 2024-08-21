@@ -40,7 +40,7 @@ export class RestaurantMenu {
       this.dishAndPriceArray = await productsResponse.json();
       this.displayOrderMenu(this.dataToPlaceOrder);
     } else {
-      this.container.innerText = "Server error.";
+      this.productsAPI.handleResponse(productsResponse, this.container)
     }
   };
   displayOrderMenu(orderData) {
