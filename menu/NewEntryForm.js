@@ -48,15 +48,10 @@ export class NewEntryForm {
     };
     const postResponse = await this.menu.productsAPI.postNewProduct(dataToPost);
     const newEntryData = await postResponse.json();
-    if (postResponse.status === 400) {
-      this.errorMessage.innerText = "Error, provide data.";
-    } else if (postResponse.status === 409) {
-      this.errorMessage.innerText =
-        "Error, article with this title already exists.";
-    } else if (postResponse.status === 404) {
-      this.errorMessage.innerText = "Error, server doesn't exist.";
-    } else if (postResponse.status === 201) {
+    if (postResponse.status === 201) {
       location.reload();
+    } else {
+      this.menu.productsAPI.handleResponse(postResponse, this.errorMessage);
     }
   };
 }
