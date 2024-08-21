@@ -7,7 +7,7 @@ export class ProductsAPI {
   };
 
   patchProduct = (dataToPost, id) => {
-    return fetch(`http://localhost:3000/products/${id}`, {
+    return fetch(`${this.serverAddress}products/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -17,13 +17,13 @@ export class ProductsAPI {
   };
 
   deleteProduct = (id) => {
-    return fetch(`http://localhost:3000/products/${id}`, {
+    return fetch(`${this.serverAddress}products/${id}`, {
       method: "DELETE",
     });
   };
 
   postNewProduct = (dataToPost) => {
-    return fetch("http://localhost:3000/products/", {
+    return fetch(`${this.serverAddress}products/`, {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
