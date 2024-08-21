@@ -33,10 +33,11 @@ export class RestaurantMenu {
     }
     const newEntryForm = new NewEntryForm(this.container, this);
   }
-  fetchProductsDataAndDisplayOrderMenu = async () => {
-    const fetchedData = await fetch(this.productsServerAddress);
-    if (fetchedData.status === 200) {
-      this.dishAndPriceArray = await fetchedData.json();
+  createProductsAPIAndDisplayOrderMenu = async () => {
+    this.productsAPI = new ProductsAPI(this.serverAddress);
+    const productsResponse = await this.productsAPI.getProducts();
+    if (productsResponse.status === 200) {
+      this.dishAndPriceArray = await productsResponse.json();
       this.displayOrderMenu(this.dataToPlaceOrder);
     } else {
       this.container.innerText = "Server error.";

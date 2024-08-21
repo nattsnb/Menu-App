@@ -40,7 +40,11 @@ export class ProvideAddressAndOrderForm {
   initializeProvideAddressAndOrderForm() {
     this.provideAddressAndOrderForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.sendTheOrder();
+      if((this.streetInput.value && this.townInput.value && this.townPostCodeInput.value) !== "") {
+        this.sendTheOrder();
+      } else {
+        this.errorMessage.innerText = "Provide address, please";
+      }
     });
   }
 
@@ -67,11 +71,11 @@ export class ProvideAddressAndOrderForm {
       this.orderNumber = newOrderData.id
       this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
       console.log("Data Sent");
-      this.displayOrderConfirmation(this.orderNumber);
+      this.displayOrderConfirmation();
     }
   };
 
-  displayOrderConfirmation(orderID) {
+  displayOrderConfirmation() {
     const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
     if (confirm(message) === true) {
       window.location.href = `http://localhost:3000/status/${this.orderNumber}/`;
