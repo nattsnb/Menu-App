@@ -1,7 +1,8 @@
 export class ProvideAddressAndOrderForm {
-  constructor(container, orderData) {
+  constructor(container, orderData, menu) {
     this.container = container;
     this.orderData = orderData;
+    this.menu = menu;
     this.createProvideAddressAndOrderForm();
     this.initializeProvideAddressAndOrderForm();
   }
@@ -51,27 +52,14 @@ export class ProvideAddressAndOrderForm {
   sendTheOrder = async () => {
     const orderDataAndAddress = this.orderData;
     orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
-    console.log(orderDataAndAddress);
-    const postResponse = await fetch("http://localhost:3000/orders/", {
-      method: "POST",
-      body: JSON.stringify(this.orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const postResponse = await this.menu.ordersAPI.postNewOrder(orderDataAndAddress)
     const newOrderData = await postResponse.json();
-    console.log(newOrderData.id);
-    if (postResponse.status === 400) {
-      this.errorMessage.innerText = "Error, provide data.";
-    } else if (postResponse.status === 404) {
-      this.errorMessage.innerText = "Error, server doesn't exist.";
-    } else if (postResponse.status === 500) {
-      this.errorMessage.innerText = "Error, internal server issue";
-    } else if (postResponse.status === 201) {
+    if (postResponse.status === 201) {
       this.orderNumber = newOrderData.id
       this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
-      console.log("Data Sent");
       this.displayOrderConfirmation();
+    } else {
+      this.menu.ordersAPI.handleResponse(postResponse, this.errorMessage)
     }
   };
 

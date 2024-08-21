@@ -1,6 +1,7 @@
 import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
 import { NewEntryForm } from "/menu/NewEntryForm.js";
 import { ProductsAPI } from "./ProductsAPI.js";
+import { OrdersAPI } from "./OrdersAPI.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 
@@ -33,7 +34,7 @@ export class RestaurantMenu {
     }
     const newEntryForm = new NewEntryForm(this.container, this);
   }
-  createProductsAPIAndDisplayOrderMenu = async () => {
+  createProductsAndOrdersAPIAndDisplayOrderMenu = async () => {
     this.productsAPI = new ProductsAPI(this.serverAddress);
     const productsResponse = await this.productsAPI.getProducts();
     if (productsResponse.status === 200) {
@@ -42,6 +43,7 @@ export class RestaurantMenu {
     } else {
       this.productsAPI.handleResponse(productsResponse, this.container)
     }
+    this.ordersAPI = new OrdersAPI(this.serverAddress);
   };
   displayOrderMenu(orderData) {
     const title = document.createElement("h1");
@@ -56,6 +58,7 @@ export class RestaurantMenu {
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
       this.container,
       this.dataToPlaceOrder,
+        this,
     );
   }
 }
