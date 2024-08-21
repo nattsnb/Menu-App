@@ -1,5 +1,5 @@
 export class EditableMenuEntry {
-  constructor(dishAndPriceArray, menuContainer, i) {
+  constructor(dishAndPriceArray, menuContainer, i, menu) {
     this.dishAndPriceArray = dishAndPriceArray;
     this.menuContainer = menuContainer;
     this.i = i;
@@ -10,6 +10,7 @@ export class EditableMenuEntry {
     this.priceInEUREditInput = null;
     this.price = null;
     this.dishName = null;
+    this.menu = menu;
     this.createMenuEntry();
   }
   createMenuEntry = () => {
@@ -111,16 +112,7 @@ export class EditableMenuEntry {
       name: this.dishNameEditInput.value,
       priceInEUR: Number(this.priceInEUREditInput.value),
     };
-    const editResponse = await fetch(
-      `http://localhost:3000/products/${this.dishAndPriceArray[this.i].id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(dataToPost),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    const editResponse = await this.menu.productsAPI.patchProduct(dataToPost, this.dishAndPriceArray[this.i].id)
     if (editResponse.status === 400) {
       this.errorMessageP.innerText = "Error, provide valid data.";
     } else if (editResponse.status === 404) {

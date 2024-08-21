@@ -25,7 +25,7 @@ export class RestaurantMenu {
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
-      new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i);
+      new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i, this);
     }
     const newEntryForm = new NewEntryForm(this.container);
   };
