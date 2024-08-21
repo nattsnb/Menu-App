@@ -73,10 +73,10 @@ export class OrderMenuEntry {
     if (this.numberOfPlates === 1) {
       this.orderData.products.push(productOrder);
     } else {
-      let obj = this.orderData.products.find(
+      let dish = this.orderData.products.find(
         (x) => x.id === this.dishAndPriceArray[this.i].id,
       );
-      let index = this.orderData.products.indexOf(obj);
+      let index = this.orderData.products.indexOf(dish);
       this.orderData.products.splice(index, 1);
       this.orderData.products.push(productOrder);
     }
@@ -91,16 +91,16 @@ export class OrderMenuEntry {
         id: this.dishAndPriceArray[this.i].id,
       };
       if (this.numberOfPlates === 0) {
-        let obj = this.orderData.products.find(
+        let dish = this.orderData.products.find(
           (x) => x.id === this.dishAndPriceArray[this.i].id,
         );
-        let index = this.orderData.products.indexOf(obj);
+        let index = this.orderData.products.indexOf(dish);
         this.orderData.products.splice(index, 1);
       } else {
-        let obj = this.orderData.products.find(
+        let dish = this.orderData.products.find(
           (x) => x.id === this.dishAndPriceArray[this.i].id,
         );
-        let index = this.orderData.products.indexOf(obj);
+        let index = this.orderData.products.indexOf(dish);
         this.orderData.products.splice(index, 1);
         this.orderData.products.push(productOrder);
       }
