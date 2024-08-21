@@ -17,7 +17,6 @@ export class OrdersStatusList {
     if (fetchedOrdersData.status === 200) {
       this.ordersArray = await fetchedOrdersData.json();
       this.sortOrdersArray();
-      console.log(this.ordersArray);
     } else {
       this.ordersAPI.handleResponse(fetchedOrdersData, this.container);
     }
