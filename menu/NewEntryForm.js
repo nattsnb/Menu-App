@@ -1,8 +1,9 @@
 import { EditableMenuEntry } from "./EditableMenuEntry.js";
 
 export class NewEntryForm {
-  constructor(container) {
+  constructor(container, menu) {
     this.container = container;
+    this.menu = menu;
     this.createNewEntryForm();
     this.initializeNewArticleForm();
   }
@@ -41,17 +42,11 @@ export class NewEntryForm {
     });
   };
   postNewEntry = async () => {
-    const dataToSend = {
+    const dataToPost = {
       name: this.dishNameInput.value,
       priceInEUR: Number(this.priceInEURInput.value),
     };
-    const postResponse = await fetch("http://localhost:3000/products/", {
-      method: "POST",
-      body: JSON.stringify(dataToSend),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const postResponse = await this.menu.productsAPI.postNewProduct(dataToPost);
     const newEntryData = await postResponse.json();
     if (postResponse.status === 400) {
       this.errorMessage.innerText = "Error, provide data.";

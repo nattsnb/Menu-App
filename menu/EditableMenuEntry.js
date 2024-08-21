@@ -112,7 +112,10 @@ export class EditableMenuEntry {
       name: this.dishNameEditInput.value,
       priceInEUR: Number(this.priceInEUREditInput.value),
     };
-    const editResponse = await this.menu.productsAPI.patchProduct(dataToPost, this.dishAndPriceArray[this.i].id)
+    const editResponse = await this.menu.productsAPI.patchProduct(
+      dataToPost,
+      this.dishAndPriceArray[this.i].id,
+    );
     if (editResponse.status === 400) {
       this.errorMessageP.innerText = "Error, provide valid data.";
     } else if (editResponse.status === 404) {
@@ -124,11 +127,8 @@ export class EditableMenuEntry {
     }
   };
   deleteButtonFunctionality = async () => {
-    const deleteResponse = await fetch(
-      `http://localhost:3000/products/${this.dishAndPriceArray[this.i].id}`,
-      {
-        method: "DELETE",
-      },
+    const deleteResponse = await this.menu.productsAPI.deleteProduct(
+      this.dishAndPriceArray[this.i].id,
     );
     if (deleteResponse.status === 200) {
       this.row.remove();

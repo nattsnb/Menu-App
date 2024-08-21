@@ -27,6 +27,6 @@ export class RestaurantMenu {
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
       new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i, this);
     }
-    const newEntryForm = new NewEntryForm(this.container);
+    const newEntryForm = new NewEntryForm(this.container, this);
   };
 }
