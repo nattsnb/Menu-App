@@ -116,15 +116,12 @@ export class EditableMenuEntry {
       dataToPost,
       this.dishAndPriceArray[this.i].id,
     );
-    if (editResponse.status === 400) {
-      this.errorMessageP.innerText = "Error, provide valid data.";
-    } else if (editResponse.status === 404) {
-      this.errorMessageP.innerText = "Server error.";
-    } else if (editResponse.status === 200) {
+    if (editResponse.status === 200) {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
       this.editEntryWrapper.replaceWith(this.row);
-    }
+    } else
+      this.menu.productsAPI.handleResponse(editResponse, this.errorMessageP);
   };
   deleteButtonFunctionality = async () => {
     const deleteResponse = await this.menu.productsAPI.deleteProduct(
@@ -136,7 +133,7 @@ export class EditableMenuEntry {
         this.editEntryWrapper.remove();
       }
     } else {
-      this.errorMessageP.innerText = "Server error.";
+      this.menu.productsAPI.handleResponse(deleteResponse, this.errorMessageP);
     }
   };
 }

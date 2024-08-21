@@ -31,4 +31,11 @@ export class ProductsAPI {
       },
     });
   };
+  handleResponse(response, errorMessageP) {
+    if (response.status === 400) {
+      errorMessageP.innerText = "Error, provide valid data.";
+    } else if (response.status === 404) {
+      errorMessageP.innerText = "Server error.";
+    }
+  }
 }
