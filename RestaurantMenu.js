@@ -7,7 +7,6 @@ export class RestaurantMenu {
     this.serverAddress = serverAddress;
     this.dishAndPriceArray = null;
     this.container = container;
-    this.createProductsAPIAndDisplayEditableMenu();
   }
 
   createProductsAPIAndDisplayEditableMenu = async () => {
