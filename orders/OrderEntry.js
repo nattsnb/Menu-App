@@ -16,7 +16,7 @@ export class OrderEntry {
     this.row = null;
     this.createListEntry();
   }
-  createListEntry() {
+  createListEntry = () => {
     this.row = document.createElement("div");
     this.row.classList.add("list-row");
     this.createOrderIdDiv();
@@ -24,8 +24,8 @@ export class OrderEntry {
     this.createErrorMessageParagraph();
     this.createOrderInfoDiv();
     this.listContainer.append(this.row);
-  }
-  createOrderIdDiv() {
+  };
+  createOrderIdDiv = () => {
     const title = document.createElement("div");
     title.innerText = "Order ID:";
     const orderID = document.createElement("div");
@@ -33,16 +33,16 @@ export class OrderEntry {
     orderID.innerText = this.ordersDataAraay[this.orderEntryNumber].id;
     this.row.append(title);
     this.row.append(orderID);
-  }
-  createStatusDiv() {
+  };
+  createStatusDiv = () => {
     const title = document.createElement("div");
     title.innerText = "Status:";
     const dropdownDiv = document.createElement("div");
     this.createDropdownWithClickChangeListeners(dropdownDiv);
     this.row.append(title);
     this.row.append(dropdownDiv);
-  }
-  createDropdownWithClickChangeListeners(container) {
+  };
+  createDropdownWithClickChangeListeners = (container) => {
     const fragment = document.createDocumentFragment();
     const select = document.createElement("select");
     select.classList.add("list-select");
@@ -69,8 +69,8 @@ export class OrderEntry {
     });
     fragment.appendChild(select);
     container.appendChild(fragment);
-  }
-  setSelectedAttributeInOrderToOrderStatus() {
+  };
+  setSelectedAttributeInOrderToOrderStatus = () => {
     if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
       this.optionFinished.setAttribute("selected", true);
     } else if (
@@ -82,7 +82,7 @@ export class OrderEntry {
     ) {
       this.optionProgress.setAttribute("selected", true);
     }
-  }
+  };
   changeToProgress = async () => {
     const data = {
       address: this.ordersDataAraay[this.orderEntryNumber].address,
@@ -140,12 +140,12 @@ export class OrderEntry {
       this.errorMessageParagraph,
     );
   };
-  createErrorMessageParagraph() {
+  createErrorMessageParagraph = () => {
     this.errorMessageParagraph = document.createElement("div");
     this.row.append(this.errorMessageParagraph);
-  }
+  };
 
-  createOrderInfoDiv() {
+  createOrderInfoDiv = () => {
     const titleContent = document.createElement("div");
     titleContent.innerText = "Order content:";
     const productsDiv = document.createElement("div");
@@ -163,7 +163,7 @@ export class OrderEntry {
     this.row.append(productsDiv);
     this.row.append(titleAddress);
     this.row.append(addressDiv);
-  }
+  };
 
   insertProductInfo = async (container, orderProducts) => {
     for (let i = 0; i < orderProducts.length; i++) {

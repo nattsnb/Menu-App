@@ -29,7 +29,7 @@ export class OrdersStatusList {
     }
   };
 
-  displayOrdersStatusList() {
+  displayOrdersStatusList = () => {
     const title = document.createElement("h1");
     title.innerText = "Orders";
     this.container.append(title);
@@ -46,9 +46,9 @@ export class OrdersStatusList {
         this,
       );
     }
-  }
+  };
 
-  sortOrdersArray() {
+  sortOrdersArray = () => {
     this.ordersArray
       .sort((a, b) => {
         if (a.status === "Finished") {
@@ -60,5 +60,5 @@ export class OrdersStatusList {
         return 1;
       })
       .reverse();
-  }
+  };
 }
