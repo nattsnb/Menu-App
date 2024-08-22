@@ -4,7 +4,7 @@ export class ProductsAPI {
   }
   getProductsJson = async () => {
     const getResponse = await fetch(`${this.serverAddress}products/`)
-    return await getResponse.json();
+    await getResponse.json();
   };
 
   patchProduct = (dataToPost, id) => {
@@ -24,7 +24,7 @@ export class ProductsAPI {
   };
 
   postNewProduct = async (dataToPost) => {
-    const postResponse = await fetch(`${this.serverAddress}products/`, {
+    return fetch(`${this.serverAddress}products/`, {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {

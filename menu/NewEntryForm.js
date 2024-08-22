@@ -47,7 +47,6 @@ export class NewEntryForm {
       priceInEUR: Number(this.priceInEURInput.value),
     };
     const postResponse = await this.menu.productsAPI.postNewProduct(dataToPost);
-    const newEntryData = await postResponse.json();
     if (postResponse.status === 201) {
       location.reload();
     } else {
