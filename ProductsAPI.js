@@ -39,9 +39,9 @@ export class ProductsAPI {
     return { data: postedProductData, responseStatus: postResponse.status };
   };
   handleResponse(response, errorMessageP) {
-    if (response.status === 400) {
+    if (response === 400) {
       errorMessageP.innerText = "Error, provide valid data.";
-    } else if (response.status === 404) {
+    } else if (response === 404) {
       errorMessageP.innerText = "Server error.";
     }
   }

@@ -10,6 +10,7 @@ export class RestaurantMenu {
     this.serverAddress = serverAddress;
     this.dishAndPriceArray = null;
     this.container = container;
+    this.ordersArray = null;
     this.dataToPlaceOrder = {
       products: [],
     };
@@ -35,14 +36,10 @@ export class RestaurantMenu {
   }
   createProductsAndOrdersAPIAndDisplayOrderMenu = async () => {
     this.productsAPI = new ProductsAPI(this.serverAddress);
-    const productsResponse = await this.productsAPI.getProducts();
-    if (productsResponse.status === 200) {
-      this.dishAndPriceArray = await productsResponse.json();
-      this.displayOrderMenu(this.dataToPlaceOrder);
-    } else {
-      this.productsAPI.handleResponse(productsResponse, this.container)
-    }
+    this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
     this.ordersAPI = new OrdersAPI(this.serverAddress);
+    this.ordersArray = (await this.ordersAPI.getOrders()).data;
+    this.displayOrderMenu(this.dataToPlaceOrder);
   };
   displayOrderMenu(orderData) {
     const title = document.createElement("h1");
