@@ -33,7 +33,7 @@ export class RestaurantMenu {
       new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i, this);
     }
     const newEntryForm = new NewEntryForm(this.container, this);
-  }
+  };
   createProductsAndOrdersAPIAndDisplayOrderMenu = async () => {
     this.productsAPI = new ProductsAPI(this.serverAddress);
     this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
@@ -54,7 +54,7 @@ export class RestaurantMenu {
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
       this.container,
       this.dataToPlaceOrder,
-        this,
+      this,
     );
   }
 }

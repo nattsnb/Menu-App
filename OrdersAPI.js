@@ -21,7 +21,6 @@ export class OrdersAPI {
     return { data: editedOrderData, responseStatus: patchResponse.status };
   };
 
-
   postNewOrder = async (dataToPost) => {
     const postResponse = await fetch(`${this.serverAddress}orders/`, {
       method: "POST",
