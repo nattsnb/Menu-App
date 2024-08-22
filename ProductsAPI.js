@@ -4,8 +4,8 @@ export class ProductsAPI {
   }
   getProducts = async () => {
     const getResponse = await fetch(`${this.serverAddress}products/`);
-    const data = await getResponse.json();
-    return { data: data, responseStatus: getResponse.status };
+    const productsArray = await getResponse.json();
+    return { data: productsArray, responseStatus: getResponse.status };
   };
 
   patchProduct = async (dataToPost, id) => {
@@ -16,8 +16,8 @@ export class ProductsAPI {
         "Content-Type": "application/json",
       },
     });
-    const data = await patchResponse.json();
-    return { data: data, responseStatus: patchResponse.status };
+    const editedProductData = await patchResponse.json();
+    return { data: editedProductData, responseStatus: patchResponse.status };
   };
 
   deleteProduct = async (id) => {
@@ -35,8 +35,8 @@ export class ProductsAPI {
         "Content-Type": "application/json",
       },
     });
-    const data = await postResponse.json();
-    return { data: data, responseStatus: postResponse.status };
+    const postedProductData = await postResponse.json();
+    return { data: postedProductData, responseStatus: postResponse.status };
   };
   handleResponse(response, errorMessageP) {
     if (response.status === 400) {
