@@ -112,11 +112,13 @@ export class EditableMenuEntry {
       name: this.dishNameEditInput.value,
       priceInEUR: Number(this.priceInEUREditInput.value),
     };
-    const editResponse = await this.menu.productsAPI.patchProduct(
-      dataToPost,
-      this.dishAndPriceArray[this.i].id,
-    );
-    if (editResponse.status === 200) {
+    const editResponse = (
+      await this.menu.productsAPI.patchProduct(
+        dataToPost,
+        this.dishAndPriceArray[this.i].id,
+      )
+    ).responseStatus;
+    if (editResponse === 200) {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
       this.editEntryWrapper.replaceWith(this.row);
@@ -124,10 +126,12 @@ export class EditableMenuEntry {
       this.menu.productsAPI.handleResponse(editResponse, this.errorMessageP);
   };
   deleteButtonFunctionality = async () => {
-    const deleteResponse = await this.menu.productsAPI.deleteProduct(
-      this.dishAndPriceArray[this.i].id,
-    );
-    if (deleteResponse.status === 200) {
+    const deleteResponse = (
+      await this.menu.productsAPI.deleteProduct(
+        this.dishAndPriceArray[this.i].id,
+      )
+    ).responseStatus;
+    if (deleteResponse === 200) {
       this.row.remove();
       if (this.editEntryWrapper) {
         this.editEntryWrapper.remove();

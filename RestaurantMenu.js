@@ -11,7 +11,7 @@ export class RestaurantMenu {
 
   createProductsAPIAndDisplayEditableMenu = async () => {
     this.productsAPI = new ProductsAPI(this.serverAddress);
-    this.dishAndPriceArray = await this.productsAPI.getProductsJson();
+    this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
     this.displayEditableMenu();
   };
 

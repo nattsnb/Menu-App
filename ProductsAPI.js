@@ -2,35 +2,41 @@ export class ProductsAPI {
   constructor(serverAddress) {
     this.serverAddress = serverAddress;
   }
-  getProductsJson = async () => {
-    const getResponse = await fetch(`${this.serverAddress}products/`)
-    await getResponse.json();
+  getProducts = async () => {
+    const getResponse = await fetch(`${this.serverAddress}products/`);
+    const data = await getResponse.json();
+    return { data: data, responseStatus: getResponse.status };
   };
 
-  patchProduct = (dataToPost, id) => {
-    return fetch(`${this.serverAddress}products/${id}`, {
+  patchProduct = async (dataToPost, id) => {
+    const patchResponse = await fetch(`${this.serverAddress}products/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dataToPost),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    const data = await patchResponse.json();
+    return { data: data, responseStatus: patchResponse.status };
   };
 
-  deleteProduct = (id) => {
-    return fetch(`${this.serverAddress}products/${id}`, {
+  deleteProduct = async (id) => {
+    const deleteResponse = await fetch(`${this.serverAddress}products/${id}`, {
       method: "DELETE",
     });
+    return { data: null, responseStatus: deleteResponse.status };
   };
 
   postNewProduct = async (dataToPost) => {
-    return fetch(`${this.serverAddress}products/`, {
+    const postResponse = await fetch(`${this.serverAddress}products/`, {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    const data = await postResponse.json();
+    return { data: data, responseStatus: postResponse.status };
   };
   handleResponse(response, errorMessageP) {
     if (response.status === 400) {

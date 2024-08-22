@@ -46,8 +46,10 @@ export class NewEntryForm {
       name: this.dishNameInput.value,
       priceInEUR: Number(this.priceInEURInput.value),
     };
-    const postResponse = await this.menu.productsAPI.postNewProduct(dataToPost);
-    if (postResponse.status === 201) {
+    const postResponse = (
+      await this.menu.productsAPI.postNewProduct(dataToPost)
+    ).responseStatus;
+    if (postResponse === 201) {
       location.reload();
     } else {
       this.menu.productsAPI.handleResponse(postResponse, this.errorMessage);
