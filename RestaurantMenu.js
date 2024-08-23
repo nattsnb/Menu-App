@@ -4,6 +4,7 @@ import { ProductsAPI } from "./ProductsAPI.js";
 import { OrdersAPI } from "./OrdersAPI.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
+import { Basket } from "./Basket.js";
 
 export class RestaurantMenu {
   constructor(container, serverAddress) {
@@ -11,9 +12,7 @@ export class RestaurantMenu {
     this.dishAndPriceArray = null;
     this.container = container;
     this.ordersArray = null;
-    this.dataToPlaceOrder = {
-      products: [],
-    };
+    this.dataToPlaceOrder = { products: [], address: "" };
   }
 
   createProductsAPIAndDisplayEditableMenu = async () => {
@@ -45,11 +44,18 @@ export class RestaurantMenu {
     const title = document.createElement("h1");
     title.innerText = "Menu";
     this.container.append(title);
+    const basket = new Basket(this, this.container);
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
-      new OrderMenuEntry(this.dishAndPriceArray, menuContainer, i, orderData);
+      new OrderMenuEntry(
+        this.dishAndPriceArray,
+        menuContainer,
+        i,
+        orderData,
+        basket,
+      );
     }
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
       this.container,
