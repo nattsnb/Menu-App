@@ -77,7 +77,8 @@ export class ProvideAddressAndOrderForm {
   displayOrderConfirmation() {
     const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
     if (confirm(message) === true) {
-      window.location.href = `http://localhost:3000/status?id=${this.orderNumber}/`;
+      const currentAddress = window.location.origin;
+      window.location.href = `${currentAddress}/status/?id=${this.orderNumber}/`;
     } else {
     }
   }
