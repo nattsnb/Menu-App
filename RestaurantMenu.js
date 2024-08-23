@@ -44,7 +44,7 @@ export class RestaurantMenu {
     const title = document.createElement("h1");
     title.innerText = "Menu";
     this.container.append(title);
-    const basket = new Basket(this, this.container);
+    this.basket = new Basket(this, this.container);
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
@@ -54,7 +54,7 @@ export class RestaurantMenu {
         menuContainer,
         i,
         orderData,
-        basket,
+        this.basket,
       );
     }
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
