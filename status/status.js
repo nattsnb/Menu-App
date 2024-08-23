@@ -1,10 +1,9 @@
+
 console.log("script is working");
+let url = new URL(window.location);
 
-const myKeysValues = window.location.search
-console.log(myKeysValues)
+let urlParams = new URLSearchParams(url.search)
 
-const urlParams = new URLSearchParams(myKeysValues)
-
-const paramId = URLSearchParams.get("id")
+const paramId = urlParams.get("id")
 
 console.log(paramId)
