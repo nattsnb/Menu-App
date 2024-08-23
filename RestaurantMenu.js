@@ -1,27 +1,28 @@
 import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
 import { NewEntryForm } from "/menu/NewEntryForm.js";
+import { ProductsAPI } from "./ProductsAPI.js";
+import { OrdersAPI } from "./OrdersAPI.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 
 export class RestaurantMenu {
-  constructor(container, productsServerAddress) {
-    this.productsServerAddress = productsServerAddress;
+  constructor(container, serverAddress) {
+    this.serverAddress = serverAddress;
     this.dishAndPriceArray = null;
     this.container = container;
+    this.ordersArray = null;
     this.dataToPlaceOrder = {
       products: [],
     };
   }
-  fetchProductsDataAndDisplayEditableMenu = async () => {
-    const fetchedData = await fetch(this.productsServerAddress);
-    if (fetchedData.status === 200) {
-      this.dishAndPriceArray = await fetchedData.json();
-      this.displayEditableMenu();
-    } else {
-      this.container.innerText = "Server error.";
-    }
+
+  createProductsAPIAndDisplayEditableMenu = async () => {
+    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
+    this.displayEditableMenu();
   };
-  displayEditableMenu() {
+
+  displayEditableMenu = () => {
     const title = document.createElement("h1");
     title.innerText = "Edit Menu";
     this.container.append(title);
@@ -29,18 +30,16 @@ export class RestaurantMenu {
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
-      new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i);
+      new EditableMenuEntry(this.dishAndPriceArray, menuContainer, i, this);
     }
-    const newEntryForm = new NewEntryForm(this.container);
-  }
-  fetchProductsDataAndDisplayOrderMenu = async () => {
-    const fetchedData = await fetch(this.productsServerAddress);
-    if (fetchedData.status === 200) {
-      this.dishAndPriceArray = await fetchedData.json();
-      this.displayOrderMenu(this.dataToPlaceOrder);
-    } else {
-      this.container.innerText = "Server error.";
-    }
+    const newEntryForm = new NewEntryForm(this.container, this);
+  };
+  createProductsAndOrdersAPIAndDisplayOrderMenu = async () => {
+    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
+    this.ordersAPI = new OrdersAPI(this.serverAddress);
+    this.ordersArray = (await this.ordersAPI.getOrders()).data;
+    this.displayOrderMenu(this.dataToPlaceOrder);
   };
   displayOrderMenu(orderData) {
     const title = document.createElement("h1");
@@ -55,6 +54,7 @@ export class RestaurantMenu {
     const provideAddressAndOrderForm = new ProvideAddressAndOrderForm(
       this.container,
       this.dataToPlaceOrder,
+      this,
     );
   }
 }
