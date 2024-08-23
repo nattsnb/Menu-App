@@ -1,5 +1,5 @@
 export class ProvideAddressAndOrderForm {
-  constructor(container, orderData) {
+  constructor(container, orderData, menu) {
     this.container = container;
     this.orderData = orderData;
     this.menu = menu;
@@ -73,7 +73,7 @@ export class ProvideAddressAndOrderForm {
   displayOrderConfirmation() {
     const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
     if (confirm(message) === true) {
-      window.location.href = `http://localhost:3000/status/${this.orderNumber}/`;
+      window.location.href = `http://localhost:3000/status?id=${this.orderNumber}/`;
     } else {
     }
   }
