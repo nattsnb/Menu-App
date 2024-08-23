@@ -54,19 +54,23 @@ export class ProvideAddressAndOrderForm {
   }
 
   sendTheOrder = async () => {
-    const orderDataAndAddress = this.orderData;
-    orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
-    const postResponse =
-      await this.menu.ordersAPI.postNewOrder(orderDataAndAddress);
-    if (postResponse.responseStatus === 201) {
-      this.orderNumber = postResponse.data.id;
-      this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
-      this.displayOrderConfirmation();
+    if (this.menu.basket.sum !== 0) {
+      const orderDataAndAddress = this.orderData;
+      orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
+      const postResponse =
+        await this.menu.ordersAPI.postNewOrder(orderDataAndAddress);
+      if (postResponse.responseStatus === 201) {
+        this.orderNumber = postResponse.data.id;
+        this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
+        this.displayOrderConfirmation();
+      } else {
+        this.menu.ordersAPI.handleResponse(
+          postResponse.responseStatus,
+          this.errorMessage,
+        );
+      }
     } else {
-      this.menu.ordersAPI.handleResponse(
-        postResponse.responseStatus,
-        this.errorMessage,
-      );
+      this.errorMessage.innerText = "Please, provide order.";
     }
   };
 

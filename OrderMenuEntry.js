@@ -1,5 +1,5 @@
 export class OrderMenuEntry {
-  constructor(dishAndPriceArray, menuContainer, i, orderData) {
+  constructor(dishAndPriceArray, menuContainer, i, orderData, basket) {
     this.dishAndPriceArray = dishAndPriceArray;
     this.menuContainer = menuContainer;
     this.i = i;
@@ -8,6 +8,7 @@ export class OrderMenuEntry {
     this.dishName = null;
     this.numberOfPlates = 0;
     this.orderData = orderData;
+    this.basket = basket;
     this.createMenuEntry();
   }
   createMenuEntry() {
@@ -69,6 +70,7 @@ export class OrderMenuEntry {
     const productOrder = {
       quantity: this.numberOfPlates,
       id: this.dishAndPriceArray[this.i].id,
+      priceInEUR: this.dishAndPriceArray[this.i].priceInEUR,
     };
     if (this.numberOfPlates === 1) {
       this.orderData.products.push(productOrder);
@@ -80,6 +82,7 @@ export class OrderMenuEntry {
       this.orderData.products.splice(index, 1);
       this.orderData.products.push(productOrder);
     }
+    this.basket.refreshBasket();
   };
 
   minusIconFunctionality = () => {
@@ -89,6 +92,7 @@ export class OrderMenuEntry {
       let productOrder = {
         quantity: this.numberOfPlates,
         id: this.dishAndPriceArray[this.i].id,
+        priceInEUR: this.dishAndPriceArray[this.i].priceInEUR,
       };
       if (this.numberOfPlates === 0) {
         let dish = this.orderData.products.find(
@@ -105,5 +109,6 @@ export class OrderMenuEntry {
         this.orderData.products.push(productOrder);
       }
     }
+    this.basket.refreshBasket();
   };
 }
