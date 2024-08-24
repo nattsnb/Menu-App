@@ -3,36 +3,42 @@ export class OrdersAPI {
     this.serverAddress = serverAddress;
   }
 
-  getOrders = () => {
-    return fetch(`${this.serverAddress}orders/`);
+  getOrders = async () => {
+    const getResponse = await fetch(`${this.serverAddress}orders/`);
+    const ordersArray = await getResponse.json();
+    return { data: ordersArray, responseStatus: getResponse.status };
   };
 
-  patchOrder = (dataToPost, id) => {
-    return fetch(`http://localhost:3000/orders/${id}`, {
+  patchOrder = async (dataToPost, id) => {
+    const patchResponse = await fetch(`${this.serverAddress}orders/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dataToPost),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    const editedOrderData = await patchResponse.json();
+    return { data: editedOrderData, responseStatus: patchResponse.status };
   };
 
-  postNewOrder = (dataToPost) => {
-    return fetch("http://localhost:3000/orders/", {
+  postNewOrder = async (dataToPost) => {
+    const postResponse = await fetch(`${this.serverAddress}orders/`, {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    const postedOrderData = await postResponse.json();
+    return { data: postedOrderData, responseStatus: postResponse.status };
   };
 
   handleResponse(response, errorMessageP) {
-    if (response.status === 400) {
+    if (response === 400) {
       errorMessageP.innerText = "Error, provide data.";
-    } else if (response.status === 404) {
+    } else if (response === 404) {
       errorMessageP.innerText = "Error, server doesn't exist.";
-    } else if (response.status === 500) {
+    } else if (response === 500) {
       errorMessageP.innerText = "Error, internal server issue";
     }
   }

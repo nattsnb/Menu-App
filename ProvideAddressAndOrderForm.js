@@ -1,5 +1,5 @@
 export class ProvideAddressAndOrderForm {
-  constructor(container, orderData) {
+  constructor(container, orderData, menu) {
     this.container = container;
     this.orderData = orderData;
     this.menu = menu;
@@ -54,24 +54,31 @@ export class ProvideAddressAndOrderForm {
   }
 
   sendTheOrder = async () => {
-    const orderDataAndAddress = this.orderData;
-    orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
-    const postResponse =
-      await this.menu.ordersAPI.postNewOrder(orderDataAndAddress);
-    const newOrderData = await postResponse.json();
-    if (postResponse.status === 201) {
-      this.orderNumber = newOrderData.id;
-      this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
-      this.displayOrderConfirmation();
+    if (this.menu.basket.sum !== 0) {
+      const orderDataAndAddress = this.orderData;
+      orderDataAndAddress.address = `${this.streetInput.value}, ${this.townInput.value}, ${this.townPostCodeInput.value}`;
+      const postResponse =
+        await this.menu.ordersAPI.postNewOrder(orderDataAndAddress);
+      if (postResponse.responseStatus === 201) {
+        this.orderNumber = postResponse.data.id;
+        this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
+        this.displayOrderConfirmation();
+      } else {
+        this.menu.ordersAPI.handleResponse(
+          postResponse.responseStatus,
+          this.errorMessage,
+        );
+      }
     } else {
-      this.menu.ordersAPI.handleResponse(postResponse, this.errorMessage);
+      this.errorMessage.innerText = "Please, provide order.";
     }
   };
 
   displayOrderConfirmation() {
     const message = `Your order is placed. Order number ${this.orderNumber}. Click ok to track your order.`;
     if (confirm(message) === true) {
-      window.location.href = `http://localhost:3000/status/${this.orderNumber}/`;
+      const currentAddress = window.location.origin;
+      window.location.href = `${currentAddress}/status/?id=${this.orderNumber}/`;
     } else {
     }
   }
