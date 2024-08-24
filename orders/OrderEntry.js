@@ -1,3 +1,5 @@
+import { populateOrderDetails } from "./populateOrderDetails.js";
+
 export class OrderEntry {
   constructor(
     ordersDataArray,
@@ -6,17 +8,18 @@ export class OrderEntry {
     localProductDatabase,
     productServerAddress,
     list,
+    productsApi,
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
-    this.productServerAddress = productServerAddress;
     this.list = list;
+    this.productsApi = productsApi;
     this.row = null;
     this.createListEntry();
   }
-  createListEntry() {
+  createListEntry = () => {
     this.row = document.createElement("div");
     this.row.classList.add("list-row");
     this.createOrderIdDiv();
@@ -24,8 +27,8 @@ export class OrderEntry {
     this.createErrorMessageParagraph();
     this.createOrderInfoDiv();
     this.listContainer.append(this.row);
-  }
-  createOrderIdDiv() {
+  };
+  createOrderIdDiv = () => {
     const title = document.createElement("div");
     title.innerText = "Order ID:";
     const orderID = document.createElement("div");
@@ -33,16 +36,16 @@ export class OrderEntry {
     orderID.innerText = this.ordersDataAraay[this.orderEntryNumber].id;
     this.row.append(title);
     this.row.append(orderID);
-  }
-  createStatusDiv() {
+  };
+  createStatusDiv = () => {
     const title = document.createElement("div");
     title.innerText = "Status:";
     const dropdownDiv = document.createElement("div");
     this.createDropdownWithClickChangeListeners(dropdownDiv);
     this.row.append(title);
     this.row.append(dropdownDiv);
-  }
-  createDropdownWithClickChangeListeners(container) {
+  };
+  createDropdownWithClickChangeListeners = (container) => {
     const fragment = document.createDocumentFragment();
     const select = document.createElement("select");
     select.classList.add("list-select");
@@ -69,8 +72,8 @@ export class OrderEntry {
     });
     fragment.appendChild(select);
     container.appendChild(fragment);
-  }
-  setSelectedAttributeInOrderToOrderStatus() {
+  };
+  setSelectedAttributeInOrderToOrderStatus = () => {
     if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
       this.optionFinished.setAttribute("selected", true);
     } else if (
@@ -82,7 +85,7 @@ export class OrderEntry {
     ) {
       this.optionProgress.setAttribute("selected", true);
     }
-  }
+  };
   changeToProgress = async () => {
     const data = {
       address: this.ordersDataAraay[this.orderEntryNumber].address,
@@ -90,24 +93,17 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "InProgress",
     };
-    const progressResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const progressResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (progressResponse.status === 200) {
       location.reload();
     }
-    if (progressResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (progressResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      progressResponse,
+      this.errorMessageParagraph,
+    );
   };
   changeToDelivery = async () => {
     const data = {
@@ -116,24 +112,17 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "Delivery",
     };
-    const deliveryResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const deliveryResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (deliveryResponse.status === 200) {
       location.reload();
     }
-    if (deliveryResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (deliveryResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      deliveryResponse,
+      this.errorMessageParagraph,
+    );
   };
   changeToFinished = async () => {
     const data = {
@@ -142,40 +131,34 @@ export class OrderEntry {
       products: this.ordersDataAraay[this.orderEntryNumber].products,
       status: "Finished",
     };
-    const finishedResponse = await fetch(
-      `http://localhost:3000/orders/${data.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+    const finishedResponse = await this.list.ordersAPI.patchOrder(
+      data,
+      data.id,
     );
     if (finishedResponse.status === 200) {
       location.reload();
     }
-    if (finishedResponse.status === 200) {
-      console.log("changed");
-    } else if (finishedResponse.status === 400) {
-      this.errorMessageParagraph.innerText = "Error, provide valid data.";
-    } else if (finishedResponse.status === 404) {
-      this.errorMessageParagraph.innerText = "Server error.";
-    }
+    this.list.ordersAPI.handleResponse(
+      finishedResponse,
+      this.errorMessageParagraph,
+    );
   };
-  createErrorMessageParagraph() {
+  createErrorMessageParagraph = () => {
     this.errorMessageParagraph = document.createElement("div");
     this.row.append(this.errorMessageParagraph);
-  }
+  };
 
-  createOrderInfoDiv() {
+  createOrderInfoDiv = () => {
     const titleContent = document.createElement("div");
     titleContent.innerText = "Order content:";
     const productsDiv = document.createElement("div");
     productsDiv.classList.add("list-products-div");
-    this.insertProductInfo(
+    populateOrderDetails(
       productsDiv,
       this.ordersDataAraay[this.orderEntryNumber].products,
+      this.localProductDatabase,
+      this.productsApi,
+      this.errorMessageParagraph,
     );
     const titleAddress = document.createElement("div");
     titleAddress.innerText = "Delivery address:";
@@ -186,59 +169,5 @@ export class OrderEntry {
     this.row.append(productsDiv);
     this.row.append(titleAddress);
     this.row.append(addressDiv);
-  }
-
-  insertProductInfo = async (container, orderProducts) => {
-    for (let i = 0; i < orderProducts.length; i++) {
-      const productWrapper = document.createElement("div");
-      productWrapper.classList.add("list-products-wrapper");
-      const listParagraphName = document.createElement("p");
-      listParagraphName.innerText = await this.findNameOfProductInDatabase(
-        orderProducts[i].id,
-        container,
-      );
-      listParagraphName.classList.add("list-paragraph-name", "list-paragraph");
-      productWrapper.append(listParagraphName);
-      const listParagraphX = document.createElement("p");
-      listParagraphX.innerText = "x";
-      listParagraphX.classList.add("list-paragraph-x", "list-paragraph");
-      productWrapper.append(listParagraphX);
-      const listParagraphQuantity = document.createElement("p");
-      listParagraphQuantity.innerText = orderProducts[i].quantity;
-      listParagraphQuantity.classList.add(
-        "list-paragraph-quantity",
-        "list-paragraph",
-      );
-      productWrapper.append(listParagraphQuantity);
-      container.append(productWrapper);
-    }
-  };
-  findNameOfProductInDatabase = async (id, container) => {
-    const productIndex = this.localProductDatabase.findIndex(
-      function (product) {
-        return product.id === id;
-      },
-    );
-    if (productIndex !== -1) {
-      return this.localProductDatabase[productIndex].name;
-    } else {
-      const newEntryPromiseResult = await this.askServerForDeletedProduct(
-        id,
-        container,
-      );
-      return newEntryPromiseResult;
-    }
-  };
-  askServerForDeletedProduct = async (id, container) => {
-    const fetchedDeletedProductData = await fetch(
-      `${this.productServerAddress}${id}/`,
-    );
-    if (fetchedDeletedProductData.status === 200) {
-      const deletedProductResponse = await fetchedDeletedProductData.json();
-      return deletedProductResponse.name;
-    } else {
-      container.innerText = "Server error.";
-      return null;
-    }
   };
 }

@@ -1,27 +1,35 @@
 import { OrderEntry } from "./OrderEntry.js";
+import { OrdersAPI } from "../OrdersAPI.js";
+import { ProductsAPI } from "../ProductsAPI.js";
 
 export class OrdersStatusList {
-  constructor(container, ordersServerAddress, productsServerAddress) {
+  constructor(container, serverAddress) {
     this.container = container;
-    this.ordersServerAddress = ordersServerAddress;
-    this.productsServerAddress = productsServerAddress;
+    this.serverAddress = serverAddress;
     this.ordersArray = [];
-    this.fetchOrdersAndDisplayOrdersStatusList();
+    this.createOrdersAndProductsAPIAndDisplayOrdersStatusList();
   }
 
-  fetchOrdersAndDisplayOrdersStatusList = async () => {
-    const fetchedOrdersData = await fetch(this.ordersServerAddress);
-    if (fetchedOrdersData.status === 200) {
-      this.ordersArray = await fetchedOrdersData.json();
+  createOrdersAndProductsAPIAndDisplayOrdersStatusList = async () => {
+    this.ordersAPI = new OrdersAPI(this.serverAddress);
+    this.productsAPI = new ProductsAPI(this.serverAddress);
+    const fetchedOrdersData = await this.ordersAPI.getOrders();
+    if (fetchedOrdersData.responseStatus === 200) {
+      this.ordersArray = fetchedOrdersData.data;
       this.sortOrdersArray();
-      console.log(this.ordersArray);
-      await this.fetchProductsDatabase();
     } else {
-      this.container.innerText = "Server error.";
+      this.ordersAPI.handleResponse(fetchedOrdersData, this.container);
+    }
+    const fetchedProductsData = await this.productsAPI.getProducts();
+    if (fetchedProductsData.responseStatus === 200) {
+      this.localProductDatabase = fetchedProductsData.data;
+      this.displayOrdersStatusList();
+    } else {
+      this.productsAPI.handleResponse(fetchedProductsData, this.container);
     }
   };
 
-  displayOrdersStatusList() {
+  displayOrdersStatusList = () => {
     const title = document.createElement("h1");
     title.innerText = "Orders";
     this.container.append(title);
@@ -34,23 +42,14 @@ export class OrdersStatusList {
         listContainer,
         i,
         this.localProductDatabase,
-        this.productsServerAddress,
+        `${this.serverAddress}products/`,
         this,
+        this.productsAPI,
       );
-    }
-  }
-
-  fetchProductsDatabase = async () => {
-    const fetchedProductsData = await fetch(this.productsServerAddress);
-    if (fetchedProductsData.status === 200) {
-      this.localProductDatabase = await fetchedProductsData.json();
-      this.displayOrdersStatusList();
-    } else {
-      this.container.innerText = "Server error.";
     }
   };
 
-  sortOrdersArray() {
+  sortOrdersArray = () => {
     this.ordersArray
       .sort((a, b) => {
         if (a.status === "Finished") {
@@ -62,5 +61,5 @@ export class OrdersStatusList {
         return 1;
       })
       .reverse();
-  }
+  };
 }
