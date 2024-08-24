@@ -291,3 +291,15 @@ p {
   font-size: 20px;
   font-weight: bold;
 }
+
+#customer-status-window{
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  border-width: 4px;
+  border-style: double;
+  border-radius: 14px;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-weight: bold;
+  padding: 15px;
+}

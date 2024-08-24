@@ -1,3 +1,4 @@
+import "../style.css";
 import { UserStatusWindow } from "./UserStatusWindow.js";
 
 let url = new URL(window.location);
