@@ -198,7 +198,6 @@ input {
   background-color: darkorange;
 }
 
-<<<<<<<<< Temporary merge branch 1
 .list-row {
   width: fit-content;
   min-width: 100%;
@@ -293,7 +292,7 @@ p {
   font-weight: bold;
 }
 
-#customer-status-window{
+#customer-status-window {
   display: flex;
   flex-direction: column;
   margin-top: 70px;
