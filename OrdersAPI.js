@@ -9,6 +9,12 @@ export class OrdersAPI {
     return { data: ordersArray, responseStatus: getResponse.status };
   };
 
+  getSpecificOrder = async (id) => {
+    const getResponse = await fetch(`${this.serverAddress}orders/${id}`);
+    const orderData = await getResponse.json();
+    return { data: orderData, responseStatus: getResponse.status };
+  };
+
   patchOrder = async (dataToPost, id) => {
     const patchResponse = await fetch(`${this.serverAddress}orders/${id}`, {
       method: "PATCH",
