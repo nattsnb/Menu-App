@@ -1,3 +1,5 @@
+import { populateOrderDetails } from "./populateOrderDetails.js";
+
 export class OrderEntry {
   constructor(
     ordersDataArray,
@@ -6,13 +8,14 @@ export class OrderEntry {
     localProductDatabase,
     productServerAddress,
     list,
+    productsApi,
   ) {
     this.ordersDataAraay = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
-    this.productServerAddress = productServerAddress;
     this.list = list;
+    this.productsApi = productsApi;
     this.row = null;
     this.createListEntry();
   }
@@ -150,9 +153,12 @@ export class OrderEntry {
     titleContent.innerText = "Order content:";
     const productsDiv = document.createElement("div");
     productsDiv.classList.add("list-products-div");
-    this.insertProductInfo(
+    populateOrderDetails(
       productsDiv,
       this.ordersDataAraay[this.orderEntryNumber].products,
+      this.localProductDatabase,
+      this.productsApi,
+      this.errorMessageParagraph,
     );
     const titleAddress = document.createElement("div");
     titleAddress.innerText = "Delivery address:";
@@ -163,60 +169,5 @@ export class OrderEntry {
     this.row.append(productsDiv);
     this.row.append(titleAddress);
     this.row.append(addressDiv);
-  };
-
-  insertProductInfo = async (container, orderProducts) => {
-    for (let i = 0; i < orderProducts.length; i++) {
-      const productWrapper = document.createElement("div");
-      productWrapper.classList.add("list-products-wrapper");
-      const listParagraphName = document.createElement("p");
-      listParagraphName.innerText = await this.findNameOfProductInDatabase(
-        orderProducts[i].id,
-        container,
-      );
-      listParagraphName.classList.add("list-paragraph-name", "list-paragraph");
-      productWrapper.append(listParagraphName);
-      const listParagraphX = document.createElement("p");
-      listParagraphX.innerText = "x";
-      listParagraphX.classList.add("list-paragraph-x", "list-paragraph");
-      productWrapper.append(listParagraphX);
-      const listParagraphQuantity = document.createElement("p");
-      listParagraphQuantity.innerText = orderProducts[i].quantity;
-      listParagraphQuantity.classList.add(
-        "list-paragraph-quantity",
-        "list-paragraph",
-      );
-      productWrapper.append(listParagraphQuantity);
-      container.append(productWrapper);
-    }
-  };
-  findNameOfProductInDatabase = async (id, container) => {
-    const productIndex = this.localProductDatabase.findIndex(
-      function (product) {
-        return product.id === id;
-      },
-    );
-    if (productIndex !== -1) {
-      return this.localProductDatabase[productIndex].name;
-    } else {
-      const newEntryPromiseResult = await this.askServerForDeletedProduct(
-        id,
-        container,
-      );
-      return newEntryPromiseResult;
-    }
-  };
-  askServerForDeletedProduct = async (id, container) => {
-    const fetchedDeletedProductData =
-      await this.list.productsAPI.getDeletedProduct(id);
-    if (fetchedDeletedProductData.status === 200) {
-      const deletedProductResponse = await fetchedDeletedProductData.json();
-      return deletedProductResponse.name;
-    } else {
-      this.list.productsAPI.handleResponse(
-        fetchedDeletedProductData,
-        this.errorMessageParagraph,
-      );
-    }
   };
 }

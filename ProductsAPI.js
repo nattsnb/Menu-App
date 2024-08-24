@@ -38,6 +38,13 @@ export class ProductsAPI {
     const postedProductData = await postResponse.json();
     return { data: postedProductData, responseStatus: postResponse.status };
   };
+
+  getDeletedProduct = async (id) => {
+    const getResponse = await fetch(`${this.serverAddress}products/${id}`);
+    const productData = await getResponse.json();
+    return { data: productData, responseStatus: getResponse.status };
+  };
+
   handleResponse(response, errorMessageP) {
     if (response === 400) {
       errorMessageP.innerText = "Error, provide valid data.";

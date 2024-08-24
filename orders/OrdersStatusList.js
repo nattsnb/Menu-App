@@ -14,15 +14,15 @@ export class OrdersStatusList {
     this.ordersAPI = new OrdersAPI(this.serverAddress);
     this.productsAPI = new ProductsAPI(this.serverAddress);
     const fetchedOrdersData = await this.ordersAPI.getOrders();
-    if (fetchedOrdersData.status === 200) {
-      this.ordersArray = await fetchedOrdersData.json();
+    if (fetchedOrdersData.responseStatus === 200) {
+      this.ordersArray = fetchedOrdersData.data;
       this.sortOrdersArray();
     } else {
       this.ordersAPI.handleResponse(fetchedOrdersData, this.container);
     }
     const fetchedProductsData = await this.productsAPI.getProducts();
-    if (fetchedProductsData.status === 200) {
-      this.localProductDatabase = await fetchedProductsData.json();
+    if (fetchedProductsData.responseStatus === 200) {
+      this.localProductDatabase = fetchedProductsData.data;
       this.displayOrdersStatusList();
     } else {
       this.productsAPI.handleResponse(fetchedProductsData, this.container);
@@ -42,8 +42,9 @@ export class OrdersStatusList {
         listContainer,
         i,
         this.localProductDatabase,
-        this.productsServerAddress,
+        `${this.serverAddress}products/`,
         this,
+        this.productsAPI,
       );
     }
   };
