@@ -10,6 +10,7 @@ export class UserStatusWindow {
     this.refreshInterval = 10000;
     this.createProductsAPI();
     this.createOrdersAPIGetOrderDataAndDisplayStatusWindow();
+    this.refreshStatusOrder();
   }
 
   createOrdersAPIGetOrderDataAndDisplayStatusWindow = async () => {
@@ -66,5 +67,9 @@ export class UserStatusWindow {
     container.append(addressDiv);
   }
 
-  refreshStatusOrder = async () => {};
+  refreshStatusOrder = async () => {
+    this.productsDatabase = (await this.productsAPI.getProducts()).data;
+    this.statusProgressDiv.innerText = `Order status: ${this.orderData.status}`;
+    setTimeout(this.refreshStatusOrder, this.refreshInterval);
+  };
 }
