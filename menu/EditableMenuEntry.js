@@ -122,8 +122,9 @@ export class EditableMenuEntry {
       this.dishName.innerText = dataToPost.name;
       this.price.innerText = dataToPost.priceInEUR;
       this.editEntryWrapper.replaceWith(this.row);
-    } else
+    } else {
       this.menu.productsAPI.handleResponse(editResponse, this.errorMessageP);
+    }
   };
   deleteButtonFunctionality = async () => {
     const deleteResponse = (
