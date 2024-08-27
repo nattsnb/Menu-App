@@ -38,11 +38,11 @@ export class ProductsAPI {
     const postedProductData = await postResponse.json();
     return { data: postedProductData, responseStatus: postResponse.status };
   };
-  handleResponse(response, errorMessageP) {
+  handleResponse(response) {
     if (response === 400) {
-      errorMessageP.innerText = "Error, provide valid data.";
+      return "Error, provide valid data.";
     } else if (response === 404) {
-      errorMessageP.innerText = "Server error.";
+      return "Server error.";
     }
   }
 }

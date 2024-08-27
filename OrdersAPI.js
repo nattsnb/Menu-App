@@ -33,13 +33,13 @@ export class OrdersAPI {
     return { data: postedOrderData, responseStatus: postResponse.status };
   };
 
-  handleResponse(response, errorMessageP) {
+  handleResponse(response) {
     if (response === 400) {
-      errorMessageP.innerText = "Error, provide data.";
+      return "Error, provide data.";
     } else if (response === 404) {
-      errorMessageP.innerText = "Error, server doesn't exist.";
+      return "Error, server doesn't exist.";
     } else if (response === 500) {
-      errorMessageP.innerText = "Error, internal server issue";
+      return "Error, internal server issue";
     }
   }
 }

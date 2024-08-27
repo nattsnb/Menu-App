@@ -94,7 +94,7 @@ export class OrderMenuEntry {
         priceInEUR: this.dishAndPriceArray[this.i].priceInEUR,
       };
       let dish = this.orderData.products.find(
-          (x) => x.id === this.dishAndPriceArray[this.i].id,
+        (x) => x.id === this.dishAndPriceArray[this.i].id,
       );
       let index = this.orderData.products.indexOf(dish);
       this.orderData.products.splice(index, 1);

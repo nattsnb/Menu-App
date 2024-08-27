@@ -123,7 +123,8 @@ export class EditableMenuEntry {
       this.price.innerText = dataToPost.priceInEUR;
       this.editEntryWrapper.replaceWith(this.row);
     } else {
-      this.menu.productsAPI.handleResponse(editResponse, this.errorMessageP);
+      this.errorMessageP.innerText =
+        this.menu.productsAPI.handleResponse(editResponse);
     }
   };
   deleteButtonFunctionality = async () => {
@@ -138,7 +139,8 @@ export class EditableMenuEntry {
         this.editEntryWrapper.remove();
       }
     } else {
-      this.menu.productsAPI.handleResponse(deleteResponse, this.errorMessageP);
+      this.errorMessageP.innerText =
+        this.menu.productsAPI.handleResponse(deleteResponse);
     }
   };
 }

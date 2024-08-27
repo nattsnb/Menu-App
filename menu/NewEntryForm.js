@@ -52,7 +52,8 @@ export class NewEntryForm {
     if (postResponse === 201) {
       location.reload();
     } else {
-      this.menu.productsAPI.handleResponse(postResponse, this.errorMessage);
+      this.errorMessage.innerText =
+        this.menu.productsAPI.handleResponse(postResponse);
     }
   };
 }
