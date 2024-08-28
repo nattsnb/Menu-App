@@ -97,8 +97,8 @@ export class OrderEntry {
       data,
       data.id,
     );
-    if (progressResponse.status === 200) {
-      location.reload();
+    if (progressResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       progressResponse,
@@ -116,8 +116,8 @@ export class OrderEntry {
       data,
       data.id,
     );
-    if (deliveryResponse.status === 200) {
-      location.reload();
+    if (deliveryResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       deliveryResponse,
@@ -135,8 +135,8 @@ export class OrderEntry {
       data,
       data.id,
     );
-    if (finishedResponse.status === 200) {
-      location.reload();
+    if (finishedResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       finishedResponse,
