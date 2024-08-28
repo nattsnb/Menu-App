@@ -1,5 +1,8 @@
-export class ProductsAPI {
+import { API } from "./API.js";
+
+export class ProductsAPI extends API {
   constructor(serverAddress) {
+    super();
     this.serverAddress = serverAddress;
   }
   getProducts = async () => {
@@ -38,11 +41,4 @@ export class ProductsAPI {
     const postedProductData = await postResponse.json();
     return { data: postedProductData, responseStatus: postResponse.status };
   };
-  handleResponse(response, errorMessageP) {
-    if (response.status === 400) {
-      errorMessageP.innerText = "Error, provide valid data.";
-    } else if (response.status === 404) {
-      errorMessageP.innerText = "Server error.";
-    }
-  }
 }
