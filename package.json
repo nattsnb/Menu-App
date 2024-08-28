@@ -1,0 +1,19 @@
+{
+  "name": "menu-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.3.4"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "url": "^0.11.4",
+    "vite-plugin-inspect": "^0.8.5"
+  }
+}
