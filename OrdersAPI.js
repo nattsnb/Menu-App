@@ -1,5 +1,8 @@
-export class OrdersAPI {
+import { API } from "./API.js";
+
+export class OrdersAPI extends API {
   constructor(serverAddress) {
+    super();
     this.serverAddress = serverAddress;
   }
 
@@ -38,14 +41,4 @@ export class OrdersAPI {
     const postedOrderData = await postResponse.json();
     return { data: postedOrderData, responseStatus: postResponse.status };
   };
-
-  handleResponse(response, errorMessageP) {
-    if (response === 400) {
-      errorMessageP.innerText = "Error, provide data.";
-    } else if (response === 404) {
-      errorMessageP.innerText = "Error, server doesn't exist.";
-    } else if (response === 500) {
-      errorMessageP.innerText = "Error, internal server issue";
-    }
-  }
 }

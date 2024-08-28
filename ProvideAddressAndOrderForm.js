@@ -42,9 +42,9 @@ export class ProvideAddressAndOrderForm {
     this.provideAddressAndOrderForm.addEventListener("submit", (event) => {
       event.preventDefault();
       if (
-        (this.streetInput.value &&
-          this.townInput.value &&
-          this.townPostCodeInput.value) !== ""
+        this.streetInput.value !== "" &&
+        this.townInput.value !== "" &&
+        this.townPostCodeInput.value !== ""
       ) {
         this.sendTheOrder();
       } else {
@@ -64,9 +64,8 @@ export class ProvideAddressAndOrderForm {
         this.errorMessage.innerText = `Order placed. Order number ${this.orderNumber}`;
         this.displayOrderConfirmation();
       } else {
-        this.menu.ordersAPI.handleResponse(
+        this.errorMessage.innerText = this.menu.ordersAPI.handleResponse(
           postResponse.responseStatus,
-          this.errorMessage,
         );
       }
     } else {
@@ -79,7 +78,6 @@ export class ProvideAddressAndOrderForm {
     if (confirm(message) === true) {
       const currentAddress = window.location.origin;
       window.location.href = `${currentAddress}/status/?id=${this.orderNumber}/`;
-    } else {
     }
   }
 }
