@@ -1,8 +1,8 @@
-import {API} from "./API.js";
+import { API } from "./API.js";
 
 export class OrdersAPI extends API {
   constructor(serverAddress) {
-    super()
+    super();
     this.serverAddress = serverAddress;
   }
 
@@ -35,5 +35,4 @@ export class OrdersAPI extends API {
     const postedOrderData = await postResponse.json();
     return { data: postedOrderData, responseStatus: postResponse.status };
   };
-
 }

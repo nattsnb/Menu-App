@@ -1,8 +1,8 @@
-import {API} from "./API.js";
+import { API } from "./API.js";
 
 export class ProductsAPI extends API {
   constructor(serverAddress) {
-    super()
+    super();
     this.serverAddress = serverAddress;
   }
   getProducts = async () => {

@@ -42,9 +42,9 @@ export class ProvideAddressAndOrderForm {
     this.provideAddressAndOrderForm.addEventListener("submit", (event) => {
       event.preventDefault();
       if (
-        (this.streetInput.value &&
-          this.townInput.value &&
-          this.townPostCodeInput.value) !== ""
+        this.streetInput.value !== "" &&
+        this.townInput.value !== "" &&
+        this.townPostCodeInput.value !== ""
       ) {
         this.sendTheOrder();
       } else {
