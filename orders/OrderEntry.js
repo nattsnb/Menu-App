@@ -74,15 +74,12 @@ export class OrderEntry {
     container.appendChild(fragment);
   };
   setSelectedAttributeInOrderToOrderStatus = () => {
-    if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
+    const status = this.ordersDataAraay[this.orderEntryNumber].status;
+    if (status === "Finished") {
       this.optionFinished.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "Delivery"
-    ) {
+    } else if (status === "Delivery") {
       this.optionDelivery.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "InProgress"
-    ) {
+    } else if (status === "InProgress") {
       this.optionProgress.setAttribute("selected", true);
     }
   };
@@ -147,7 +144,6 @@ export class OrderEntry {
     this.errorMessageParagraph = document.createElement("div");
     this.row.append(this.errorMessageParagraph);
   };
-
   createOrderInfoDiv = () => {
     const titleContent = document.createElement("div");
     titleContent.innerText = "Order content:";
