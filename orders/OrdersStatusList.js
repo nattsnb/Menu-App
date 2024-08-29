@@ -69,16 +69,17 @@ export class OrdersStatusList {
   };
 
   sortOrdersArray = () => {
-    this.ordersArray
-      .sort((a, b) => {
-        if (a.status === "Finished") {
-          return -1;
-        }
-        if (a.status === "Delivery" && b.status === "InProgress") {
-          return -1;
-        }
+    this.ordersArray.sort((leftElement, rightElement) => {
+      if (leftElement.status === "Finished") {
         return 1;
-      })
-      .reverse();
+      }
+      if (
+        leftElement.status === "Delivery" &&
+        rightElement.status === "InProgress"
+      ) {
+        return 1;
+      }
+      return -1;
+    });
   };
 }
