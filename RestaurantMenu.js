@@ -1,7 +1,7 @@
 import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
 import { NewEntryForm } from "/menu/NewEntryForm.js";
-import { ProductsAPI } from "./ProductsAPI.js";
-import { OrdersAPI } from "./OrdersAPI.js";
+import { ProductsAPI } from "./API/ProductsAPI.js";
+import { OrdersAPI } from "./API/OrdersAPI.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 import { Basket } from "./Basket.js";
