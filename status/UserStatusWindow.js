@@ -1,12 +1,11 @@
-import { OrdersAPI } from "../OrdersAPI.js";
-import { ProductsAPI } from "../ProductsAPI.js";
+import { ordersAPI, productsAPI } from "../API/index.js";
 import { populateOrderDetails } from "../orders/populateOrderDetails.js";
 
 export class UserStatusWindow {
-  constructor(id, container, serverAddress) {
+  constructor(id, container) {
     this.id = id;
     this.container = container;
-    this.serverAddress = serverAddress;
+    console.log(this.container);
     this.refreshInterval = 10000;
     this.createProductsAPI();
     this.createOrdersAPIGetOrderDataAndDisplayStatusWindow();
@@ -14,13 +13,13 @@ export class UserStatusWindow {
   }
 
   createOrdersAPIGetOrderDataAndDisplayStatusWindow = async () => {
-    this.ordersAPI = new OrdersAPI(this.serverAddress);
+    this.ordersAPI = ordersAPI;
     this.orderData = (await this.ordersAPI.getSpecificOrder(this.id)).data;
     this.displayStatusWindow();
   };
 
   createProductsAPI = async () => {
-    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.productsAPI = productsAPI;
     this.productsDatabase = (await this.productsAPI.getProducts()).data;
   };
 
@@ -53,7 +52,6 @@ export class UserStatusWindow {
       productsDiv,
       this.orderData.products,
       this.productsDatabase,
-      this.productsAPI,
       this.errorMessageParagraph,
     );
     const titleAddress = document.createElement("div");
