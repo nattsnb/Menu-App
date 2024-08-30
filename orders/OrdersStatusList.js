@@ -1,18 +1,16 @@
 import { OrderEntry } from "./OrderEntry.js";
-import { OrdersAPI } from "../API/OrdersAPI.js";
-import { ProductsAPI } from "../API/ProductsAPI.js";
+import { ordersAPI, productsAPI } from "../API/index.js";
 
 export class OrdersStatusList {
-  constructor(container, serverAddress) {
+  constructor(container) {
     this.container = container;
-    this.serverAddress = serverAddress;
     this.ordersArray = [];
     this.createOrdersAndProductsAPIAndDisplayOrdersStatusList();
   }
 
   createOrdersAndProductsAPIAndDisplayOrdersStatusList = async () => {
-    this.ordersAPI = new OrdersAPI(this.serverAddress);
-    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.ordersAPI = ordersAPI;
+    this.productsAPI = productsAPI;
     const fetchedOrdersData = await this.ordersAPI.getOrders();
     if (fetchedOrdersData.responseStatus === 200) {
       this.ordersArray = fetchedOrdersData.data;
@@ -46,7 +44,6 @@ export class OrdersStatusList {
         this.listContainer,
         i,
         this.localProductDatabase,
-        `${this.serverAddress}products/`,
         this,
         this.productsAPI,
       );

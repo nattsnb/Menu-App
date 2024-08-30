@@ -1,21 +1,14 @@
 import { populateOrderDetails } from "./populateOrderDetails.js";
+import { productsAPI } from "../API/index.js";
 
 export class OrderEntry {
-  constructor(
-    ordersDataArray,
-    listContainer,
-    i,
-    localProductDatabase,
-    productServerAddress,
-    list,
-    productsApi,
-  ) {
+  constructor(ordersDataArray, listContainer, i, localProductDatabase, list) {
     this.ordersDataArray = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
     this.list = list;
-    this.productsApi = productsApi;
+    this.productsApi = productsAPI;
     this.row = null;
     this.createListEntry();
   }
@@ -153,7 +146,6 @@ export class OrderEntry {
       productsDiv,
       this.ordersDataArray[this.orderEntryNumber].products,
       this.localProductDatabase,
-      this.productsApi,
       this.errorMessageParagraph,
     );
     const titleAddress = document.createElement("div");

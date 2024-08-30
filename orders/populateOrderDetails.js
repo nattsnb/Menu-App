@@ -2,7 +2,6 @@ export async function populateOrderDetails(
   container,
   orderProducts,
   productsDatabase,
-  productsAPI,
   errorMessageParagraph,
 ) {
   for (let i = 0; i < orderProducts.length; i++) {
@@ -13,7 +12,6 @@ export async function populateOrderDetails(
       orderProducts[i].id,
       container,
       productsDatabase,
-      productsAPI,
       errorMessageParagraph,
     );
     listParagraphName.classList.add("list-paragraph-name", "list-paragraph");
@@ -36,7 +34,6 @@ async function findNameOfProductInDatabase(
   id,
   container,
   productsDatabase,
-  productsAPI,
   errorMessageParagraph,
 ) {
   const productIndex = productsDatabase.findIndex(function (product) {
@@ -48,7 +45,6 @@ async function findNameOfProductInDatabase(
     const newEntryPromiseResult = await askServerForDeletedProduct(
       id,
       container,
-      productsAPI,
       errorMessageParagraph,
     );
     return newEntryPromiseResult;
