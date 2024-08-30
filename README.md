@@ -5,12 +5,12 @@ Simple app made for customers place their orders online and to track them after.
 ## App installation:
 
 1. Pull repo to your directory
-2. Pull api repo https://github.com/Solnick/orders-products-simple-api
+2. Pull API repo https://github.com/Solnick/orders-products-simple-api
 3. Install and start api repo
 
 `npm install`
 
-4. Run api repo on localhost 3000
+4. Run API repo on localhost 3000
 
 `npm run start`
 
@@ -36,6 +36,6 @@ Website where owner can introduce changes or new entries to the products categor
 
 Website where customer can edit and place the order. Plus/minus buttons allows to add number of dishes to order. Form asks to provide the address. If both provided it does create new order on the server and pops out confirmation to move to order status tracking page.
 
-### Orders Status
+### Orders
 
-Website where owner sees all orders that were placed. They can change status of the order from dropdown-list. the dropdown-list default option is the current order status. after choosing another option the patch fetch is sent. The orders are displayed in order: InProgress, Delivery, Finished. After changing the status the website is being refreshed to keep the order intact.
+Website where owner sees all orders that were placed. They can change status of the order from dropdown-list. the dropdown-list default option is the current order status. after choosing another option the patch fetch is sent. The orders are displayed in order: InProgress, Delivery, Finished. After changing the status the app fetches new data and refreshes list order.

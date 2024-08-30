@@ -19,8 +19,7 @@ button {
   font-family: "Ubuntu", sans-serif;
   font-size: 16px;
   background-color: white;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid;
 }
 
 input {
@@ -55,11 +54,9 @@ h2 {
   height: 35px;
   display: flex;
   flex-direction: row;
-
   align-items: center;
   margin-bottom: 10px;
-  border-width: 4px;
-  border-style: double;
+  border: 4px double;
   border-radius: 14px;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: bold;
@@ -125,9 +122,7 @@ h2 {
 .edit-entry-wrapper {
   display: flex;
   align-items: center;
-  border-style: solid;
-  border-width: 4px;
-  border-style: double;
+  border: 4px double;
   border-radius: 14px;
   margin-bottom: 10px;
   height: 35px;
@@ -204,9 +199,7 @@ input {
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
-  border-style: solid;
-  border-width: 4px;
-  border-style: double;
+  border: 4px double;
   border-radius: 14px;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: bold;
@@ -231,10 +224,8 @@ input {
 .list-select {
   margin-right: 20px;
   margin-left: 20px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid darkorange;
   font-family: "Edu AU VIC WA NT Hand", cursive;
-  border-color: darkorange;
   padding: 2px;
 }
 
@@ -245,8 +236,7 @@ input {
   margin-right: 20px;
   margin-left: 20px;
   padding: 10px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: normal;
 }
@@ -266,8 +256,7 @@ input {
   margin-right: 20px;
   margin-left: 20px;
   padding: 10px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: normal;
 }
@@ -296,8 +285,7 @@ p {
   display: flex;
   flex-direction: column;
   margin-top: 70px;
-  border-width: 4px;
-  border-style: double;
+  border: 4px double;
   border-radius: 14px;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: bold;

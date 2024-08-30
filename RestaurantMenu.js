@@ -1,14 +1,12 @@
 import { EditableMenuEntry } from "/menu/EditableMenuEntry.js";
 import { NewEntryForm } from "/menu/NewEntryForm.js";
-import { ProductsAPI } from "./ProductsAPI.js";
-import { OrdersAPI } from "./OrdersAPI.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 import { Basket } from "./Basket.js";
+import { ordersAPI, productsAPI } from "./API/index.js";
 
 export class RestaurantMenu {
-  constructor(container, serverAddress) {
-    this.serverAddress = serverAddress;
+  constructor(container) {
     this.dishAndPriceArray = null;
     this.container = container;
     this.ordersArray = null;
@@ -16,7 +14,7 @@ export class RestaurantMenu {
   }
 
   createProductsAPIAndDisplayEditableMenu = async () => {
-    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.productsAPI = productsAPI;
     this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
     this.displayEditableMenu();
   };
@@ -34,9 +32,9 @@ export class RestaurantMenu {
     const newEntryForm = new NewEntryForm(this.container, this);
   };
   createProductsAndOrdersAPIAndDisplayOrderMenu = async () => {
-    this.productsAPI = new ProductsAPI(this.serverAddress);
+    this.productsAPI = productsAPI;
     this.dishAndPriceArray = (await this.productsAPI.getProducts()).data;
-    this.ordersAPI = new OrdersAPI(this.serverAddress);
+    this.ordersAPI = ordersAPI;
     this.ordersArray = (await this.ordersAPI.getOrders()).data;
     this.displayOrderMenu(this.dataToPlaceOrder);
   };

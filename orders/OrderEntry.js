@@ -1,21 +1,14 @@
 import { populateOrderDetails } from "./populateOrderDetails.js";
+import { productsAPI } from "../API/index.js";
 
 export class OrderEntry {
-  constructor(
-    ordersDataArray,
-    listContainer,
-    i,
-    localProductDatabase,
-    productServerAddress,
-    list,
-    productsApi,
-  ) {
-    this.ordersDataAraay = ordersDataArray;
+  constructor(ordersDataArray, listContainer, i, localProductDatabase, list) {
+    this.ordersDataArray = ordersDataArray;
     this.listContainer = listContainer;
     this.orderEntryNumber = i;
     this.localProductDatabase = localProductDatabase;
     this.list = list;
-    this.productsApi = productsApi;
+    this.productsApi = productsAPI;
     this.row = null;
     this.createListEntry();
   }
@@ -31,11 +24,11 @@ export class OrderEntry {
   createOrderIdDiv = () => {
     const title = document.createElement("div");
     title.innerText = "Order ID:";
-    const orderID = document.createElement("div");
-    orderID.classList.add("list-order-id");
-    orderID.innerText = this.ordersDataAraay[this.orderEntryNumber].id;
+    const orderId = document.createElement("div");
+    orderId.classList.add("list-order-id");
+    orderId.innerText = this.ordersDataArray[this.orderEntryNumber].id;
     this.row.append(title);
-    this.row.append(orderID);
+    this.row.append(orderId);
   };
   createStatusDiv = () => {
     const title = document.createElement("div");
@@ -74,31 +67,28 @@ export class OrderEntry {
     container.appendChild(fragment);
   };
   setSelectedAttributeInOrderToOrderStatus = () => {
-    if (this.ordersDataAraay[this.orderEntryNumber].status === "Finished") {
+    const status = this.ordersDataArray[this.orderEntryNumber].status;
+    if (status === "Finished") {
       this.optionFinished.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "Delivery"
-    ) {
+    } else if (status === "Delivery") {
       this.optionDelivery.setAttribute("selected", true);
-    } else if (
-      this.ordersDataAraay[this.orderEntryNumber].status === "InProgress"
-    ) {
+    } else if (status === "InProgress") {
       this.optionProgress.setAttribute("selected", true);
     }
   };
   changeToProgress = async () => {
     const data = {
-      address: this.ordersDataAraay[this.orderEntryNumber].address,
-      id: this.ordersDataAraay[this.orderEntryNumber].id,
-      products: this.ordersDataAraay[this.orderEntryNumber].products,
+      address: this.ordersDataArray[this.orderEntryNumber].address,
+      id: this.ordersDataArray[this.orderEntryNumber].id,
+      products: this.ordersDataArray[this.orderEntryNumber].products,
       status: "InProgress",
     };
     const progressResponse = await this.list.ordersAPI.patchOrder(
       data,
       data.id,
     );
-    if (progressResponse.status === 200) {
-      location.reload();
+    if (progressResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       progressResponse,
@@ -107,17 +97,17 @@ export class OrderEntry {
   };
   changeToDelivery = async () => {
     const data = {
-      address: this.ordersDataAraay[this.orderEntryNumber].address,
-      id: this.ordersDataAraay[this.orderEntryNumber].id,
-      products: this.ordersDataAraay[this.orderEntryNumber].products,
+      address: this.ordersDataArray[this.orderEntryNumber].address,
+      id: this.ordersDataArray[this.orderEntryNumber].id,
+      products: this.ordersDataArray[this.orderEntryNumber].products,
       status: "Delivery",
     };
     const deliveryResponse = await this.list.ordersAPI.patchOrder(
       data,
       data.id,
     );
-    if (deliveryResponse.status === 200) {
-      location.reload();
+    if (deliveryResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       deliveryResponse,
@@ -126,17 +116,17 @@ export class OrderEntry {
   };
   changeToFinished = async () => {
     const data = {
-      address: this.ordersDataAraay[this.orderEntryNumber].address,
-      id: this.ordersDataAraay[this.orderEntryNumber].id,
-      products: this.ordersDataAraay[this.orderEntryNumber].products,
+      address: this.ordersDataArray[this.orderEntryNumber].address,
+      id: this.ordersDataArray[this.orderEntryNumber].id,
+      products: this.ordersDataArray[this.orderEntryNumber].products,
       status: "Finished",
     };
     const finishedResponse = await this.list.ordersAPI.patchOrder(
       data,
       data.id,
     );
-    if (finishedResponse.status === 200) {
-      location.reload();
+    if (finishedResponse.responseStatus === 200) {
+      await this.list.refreshTheList();
     }
     this.list.ordersAPI.handleResponse(
       finishedResponse,
@@ -147,7 +137,6 @@ export class OrderEntry {
     this.errorMessageParagraph = document.createElement("div");
     this.row.append(this.errorMessageParagraph);
   };
-
   createOrderInfoDiv = () => {
     const titleContent = document.createElement("div");
     titleContent.innerText = "Order content:";
@@ -155,16 +144,15 @@ export class OrderEntry {
     productsDiv.classList.add("list-products-div");
     populateOrderDetails(
       productsDiv,
-      this.ordersDataAraay[this.orderEntryNumber].products,
+      this.ordersDataArray[this.orderEntryNumber].products,
       this.localProductDatabase,
-      this.productsApi,
       this.errorMessageParagraph,
     );
     const titleAddress = document.createElement("div");
     titleAddress.innerText = "Delivery address:";
     const addressDiv = document.createElement("div");
     addressDiv.classList.add("list-address-div");
-    addressDiv.innerText = this.ordersDataAraay[this.orderEntryNumber].address;
+    addressDiv.innerText = this.ordersDataArray[this.orderEntryNumber].address;
     this.row.append(titleContent);
     this.row.append(productsDiv);
     this.row.append(titleAddress);
