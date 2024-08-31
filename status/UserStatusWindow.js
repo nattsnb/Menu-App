@@ -30,15 +30,19 @@ export class UserStatusWindow {
     const statusOrderNumberDiv = document.createElement("div");
     statusWindow.append(statusOrderNumberDiv);
     statusOrderNumberDiv.setAttribute("id", "status-order-number");
+    statusOrderNumberDiv.classList.add("status-line")
     statusOrderNumberDiv.innerText = `Order number: ${this.id}"`;
     this.statusProgressDiv = document.createElement("div");
     statusWindow.append(this.statusProgressDiv);
     this.statusProgressDiv.setAttribute("id", "status-progress");
+    this.statusProgressDiv.classList.add("status-line")
     this.statusProgressDiv.innerText = `Order status: ${this.orderData.status}`;
     const statusOrderDetailsDiv = document.createElement("div");
     statusWindow.append(statusOrderDetailsDiv);
     statusOrderDetailsDiv.setAttribute("id", "status-order-info");
+    statusOrderDetailsDiv.classList.add("status-line")
     this.errorMessageParagraph = document.createElement("div");
+    this.errorMessageParagraph.classList.add("status-line")
     statusWindow.append(this.errorMessageParagraph);
     this.displayOrderInfo(statusOrderDetailsDiv);
   }
