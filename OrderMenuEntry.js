@@ -45,13 +45,13 @@ export class OrderMenuEntry {
     const numberOfPlatesDiv = document.createElement("div");
     numberOfPlatesDiv.classList.add("number-of-plates-div");
     this.row.append(numberOfPlatesDiv);
-    const plusIcon = this.returnIcon("fa-plus-circle", numberOfPlatesDiv);
-    plusIcon.addEventListener("click", this.plusIconFunctionality);
-    numberOfPlatesDiv.append(plusIcon);
     this.numberDiv = document.createElement("div");
     this.numberDiv.classList.add("number-div");
     this.numberDiv.innerHTML = this.numberOfPlates;
     numberOfPlatesDiv.append(this.numberDiv);
+    const plusIcon = this.returnIcon("fa-plus-circle", numberOfPlatesDiv);
+    plusIcon.addEventListener("click", this.plusIconFunctionality);
+    numberOfPlatesDiv.append(plusIcon);
     const minusIcon = this.returnIcon("fa-minus-circle", numberOfPlatesDiv);
     minusIcon.addEventListener("click", this.minusIconFunctionality);
     numberOfPlatesDiv.append(minusIcon);
