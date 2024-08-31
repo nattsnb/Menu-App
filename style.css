@@ -4,7 +4,7 @@ body {
   align-items: center;
   font-family: "Lato", sans-serif;
   color: #EEEEEE;
-  background-color: #222831
+  background-color: #222831;
 }
 
 button {
@@ -54,6 +54,7 @@ h2 {
 
 .menu-row {
   min-height: 100%;
+  height: max-content;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -206,7 +207,7 @@ input {
 
 .list-row {
   width: fit-content;
-  min-width: 100%;
+  min-width: 90%;
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
@@ -310,4 +311,36 @@ p {
 
 #logo {
   width:350px;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+
+  #menu-container {
+    width: 300px
+  }
+  #logo {
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .menu-row {
+    max-width: 100%;
+  }
+  .dish-name {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 250px;
+  }
+  .price-with-currency {
+    width: 50px;
+    margin-right: 10px;
+  }
+  .number-of-plates-div {
+    margin-right: 10px;
+  }
+  .edit-edit-on-small-screen {
+    width: 250px;
+  }
 }
