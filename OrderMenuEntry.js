@@ -88,7 +88,7 @@ export class OrderMenuEntry {
     if (this.numberOfPlates > 0) {
       this.numberOfPlates = this.numberOfPlates - 1;
       this.numberDiv.innerHTML = this.numberOfPlates;
-      let productOrder = {
+      const productOrder = {
         quantity: this.numberOfPlates,
         id: this.dishAndPriceArray[this.i].id,
         priceInEUR: this.dishAndPriceArray[this.i].priceInEUR,

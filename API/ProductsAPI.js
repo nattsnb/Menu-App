@@ -41,4 +41,10 @@ export class ProductsAPI extends API {
     const postedProductData = await postResponse.json();
     return { data: postedProductData, responseStatus: postResponse.status };
   };
+
+  getDeletedProduct = async (id) => {
+    const getResponse = await fetch(`${this.serverAddress}products/${id}`);
+    const productData = await getResponse.json();
+    return { data: productData, responseStatus: getResponse.status };
+  };
 }
