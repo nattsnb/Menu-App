@@ -1,11 +1,10 @@
-import { ordersAPI, productsAPI } from "../API/index.js";
+import { ordersAPI, productsAPI } from "../API/";
 import { populateOrderDetails } from "../orders/populateOrderDetails.js";
 
 export class UserStatusWindow {
   constructor(id, container) {
     this.id = id;
     this.container = container;
-    console.log(this.container);
     this.refreshInterval = 10000;
     this.createProductsAPI();
     this.createOrdersAPIGetOrderDataAndDisplayStatusWindow();

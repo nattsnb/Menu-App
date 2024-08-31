@@ -1,5 +1,5 @@
 import { populateOrderDetails } from "./populateOrderDetails.js";
-import { productsAPI } from "../API/index.js";
+import { productsAPI } from "../API/";
 
 export class OrderEntry {
   constructor(ordersDataArray, listContainer, i, localProductDatabase, list) {

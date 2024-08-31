@@ -3,7 +3,7 @@ import { NewEntryForm } from "/menu/NewEntryForm.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 import { Basket } from "./Basket.js";
-import { ordersAPI, productsAPI } from "./API/index.js";
+import { ordersAPI, productsAPI } from "./API/";
 
 export class RestaurantMenu {
   constructor(container) {

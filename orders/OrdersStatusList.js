@@ -1,5 +1,5 @@
 import { OrderEntry } from "./OrderEntry.js";
-import { ordersAPI, productsAPI } from "../API/index.js";
+import { ordersAPI, productsAPI } from "../API/";
 
 export class OrdersStatusList {
   constructor(container) {
