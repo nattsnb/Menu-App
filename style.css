@@ -315,6 +315,13 @@ p {
   align-items: center;
 }
 
+.price-currency-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 500px) {
 
   #menu-container {
@@ -342,5 +349,13 @@ p {
   }
   .edit-edit-on-small-screen {
     width: 250px;
+  }
+  .edit-form{
+    max-width: 250px;
+    flex-direction: column;
+  }
+  .edit-entry-wrapper {
+    height: max-content;
+    padding: 3px;
   }
 }
