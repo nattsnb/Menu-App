@@ -3,16 +3,16 @@ body {
   justify-content: center;
   align-items: center;
   font-family: "Lato", sans-serif;
-  color: #EEEEEE;
+  color: #eeeeee;
   background-color: #222831;
 }
 
 button {
   font-family: "Lato", sans-serif;
   font-size: 16px;
-  background-color: #31363F;
-  border: 1px solid #EEEEEE;
-  color: #EEEEEE;
+  background-color: #31363f;
+  border: 1px solid #eeeeee;
+  color: #eeeeee;
 }
 
 input {
@@ -51,7 +51,6 @@ h2 {
   flex-direction: column;
 }
 
-
 .menu-row {
   min-height: 100%;
   height: max-content;
@@ -63,7 +62,7 @@ h2 {
   border-radius: 14px;
   font-family: "Lato", sans-serif;
   font-weight: bold;
-  background-color: #31363F;
+  background-color: #31363f;
   width: 100%;
 }
 
@@ -177,7 +176,7 @@ h2 {
 .fas {
   font-size: 22px;
   margin-left: 5px;
-  color: #76ABAE;
+  color: #76abae;
 }
 
 .fa-plus-circle {
@@ -195,14 +194,14 @@ h2 {
 
 input {
   margin: 5px;
-  background-color: #31363F;
-  color: #EEEEEE;
+  background-color: #31363f;
+  color: #eeeeee;
 }
 
 .new-order-send-button {
   margin-top: 15px;
   font-size: 30px;
-  background-color: #31363F;
+  background-color: #31363f;
 }
 
 .list-row {
@@ -236,7 +235,7 @@ input {
 .list-select {
   margin-right: 20px;
   margin-left: 20px;
-  border: 1px solid #76ABAE;
+  border: 1px solid #76abae;
   font-family: "Lato", sans-serif;
   padding: 2px;
 }
@@ -306,11 +305,10 @@ p {
 
 .status-line {
   margin-bottom: 15px;
-
 }
 
 #logo {
-  width:350px;
+  width: 350px;
   justify-content: center;
   align-items: center;
 }
@@ -323,9 +321,8 @@ p {
 }
 
 @media (max-width: 500px) {
-
   #menu-container {
-    width: 300px
+    width: 300px;
   }
   #logo {
     max-width: 100%;
@@ -350,7 +347,7 @@ p {
   .edit-edit-on-small-screen {
     width: 250px;
   }
-  .edit-form{
+  .edit-form {
     max-width: 250px;
     flex-direction: column;
   }

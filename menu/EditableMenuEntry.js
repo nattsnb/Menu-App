@@ -79,12 +79,12 @@ export class EditableMenuEntry {
     this.priceInEUREditInput.value = this.dishAndPriceArray[this.i].priceInEUR;
     this.priceInEUREditInput.classList.add("price-in-EUR-edit-input");
     this.priceInEUREditInput.placeholder = "0.0";
-    const priceCurrencyWrapper = document.createElement("div")
-    priceCurrencyWrapper.classList.add("price-currency-wrapper")
+    const priceCurrencyWrapper = document.createElement("div");
+    priceCurrencyWrapper.classList.add("price-currency-wrapper");
     priceCurrencyWrapper.append(this.priceInEUREditInput);
     this.editForm.append(this.dishNameEditInput);
     this.editForm.append(priceCurrencyWrapper);
-    this.createEditFormCurrencyParagraph(priceCurrencyWrapper)
+    this.createEditFormCurrencyParagraph(priceCurrencyWrapper);
   };
   createEditFormCurrencyParagraph = (container) => {
     const currencyP = document.createElement("p");
