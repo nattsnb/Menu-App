@@ -39,3 +39,7 @@ Website where customer can edit and place the order. Plus/minus buttons allows t
 ### Orders
 
 Website where owner sees all orders that were placed. They can change status of the order from dropdown-list. the dropdown-list default option is the current order status. after choosing another option the patch fetch is sent. The orders are displayed in order: InProgress, Delivery, Finished. After changing the status the app fetches new data and refreshes list order.
+
+### Customer Status
+
+Website that is generated for particular order. Customer can track the status as the data is being refreshed every 10 seconds.

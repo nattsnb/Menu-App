@@ -3,7 +3,7 @@ import { NewEntryForm } from "/menu/NewEntryForm.js";
 import { OrderMenuEntry } from "./OrderMenuEntry.js";
 import { ProvideAddressAndOrderForm } from "./ProvideAddressAndOrderForm.js";
 import { Basket } from "./Basket.js";
-import { ordersAPI, productsAPI } from "./API/index.js";
+import { ordersAPI, productsAPI } from "./API/";
 
 export class RestaurantMenu {
   constructor(container) {
@@ -42,10 +42,10 @@ export class RestaurantMenu {
     const title = document.createElement("h1");
     title.innerText = "Menu";
     this.container.append(title);
-    this.basket = new Basket(this, this.container);
     const menuContainer = document.createElement("div");
     menuContainer.setAttribute("id", "menu-container");
     this.container.append(menuContainer);
+    this.basket = new Basket(this, this.container);
     for (let i = 0; i < this.dishAndPriceArray.length; i++) {
       new OrderMenuEntry(
         this.dishAndPriceArray,

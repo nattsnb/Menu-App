@@ -47,7 +47,7 @@ async function findNameOfProductInDatabase(
       container,
       errorMessageParagraph,
     );
-    return newEntryPromiseResult;
+    return await newEntryPromiseResult;
   }
 }
 async function askServerForDeletedProduct(

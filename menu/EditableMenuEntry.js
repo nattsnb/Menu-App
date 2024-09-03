@@ -65,7 +65,6 @@ export class EditableMenuEntry {
     this.errorMessageP.classList.add("error-message-p");
     this.editForm.append(this.errorMessageP);
     this.createEditFormInputs(this.editEntryWrapper);
-    this.createEditFormCurrencyParagraph(this.editEntryWrapper);
     this.createSaveButtonEditForm(this.editEntryWrapper);
     this.createDeleteButtonEditForm();
     this.row.replaceWith(this.editEntryWrapper);
@@ -80,14 +79,18 @@ export class EditableMenuEntry {
     this.priceInEUREditInput.value = this.dishAndPriceArray[this.i].priceInEUR;
     this.priceInEUREditInput.classList.add("price-in-EUR-edit-input");
     this.priceInEUREditInput.placeholder = "0.0";
+    const priceCurrencyWrapper = document.createElement("div");
+    priceCurrencyWrapper.classList.add("price-currency-wrapper");
+    priceCurrencyWrapper.append(this.priceInEUREditInput);
     this.editForm.append(this.dishNameEditInput);
-    this.editForm.append(this.priceInEUREditInput);
+    this.editForm.append(priceCurrencyWrapper);
+    this.createEditFormCurrencyParagraph(priceCurrencyWrapper);
   };
-  createEditFormCurrencyParagraph = () => {
+  createEditFormCurrencyParagraph = (container) => {
     const currencyP = document.createElement("p");
     currencyP.innerText = "€";
     currencyP.classList.add("currency-p-form");
-    this.editForm.append(currencyP);
+    container.append(currencyP);
   };
   createSaveButtonEditForm = () => {
     const saveButton = document.createElement("button");
